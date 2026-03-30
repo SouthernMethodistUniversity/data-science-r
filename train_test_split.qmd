@@ -1,1 +1,124 @@
 # Training and Testing
+
+```{r}
+#| output: false
+#| echo: false
+
+library(tidyverse)
+library(palmerpenguins)
+df_raw <- penguins
+str(df_raw)
+head(df_raw)
+summary(df_raw)
+df <- df_raw %>%
+  select(species, island, bill_length_mm, bill_depth_mm, flipper_length_mm,
+         body_mass_g, sex) %>%
+  mutate(
+    species = as.factor(species),
+    island = as.factor(island),
+    sex = as.factor(sex),
+    large_body = ifelse(body_mass_g > median(body_mass_g, na.rm = TRUE), 1, 0)
+  ) %>%
+  filter(
+    !is.na(bill_length_mm),
+    !is.na(bill_depth_mm),
+    !is.na(flipper_length_mm),
+    !is.na(body_mass_g),
+    !is.na(sex)
+  )
+lm_model <- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = df)
+```
+
+When building models, it is important to evaluate how well they perform on **new, unseen data**. If we only evaluate a model on the same data it was trained on, we can get overly optimistic results.
+
+## Why Split the Data?
+
+If we train and test on the same dataset:
+
+- the model has already “seen” the data  
+- it can appear more accurate than it really is  
+- we cannot tell how well it will perform in practice  
+
+To address this, we split the data into:
+
+- **Training set** → used to fit the model  
+- **Test set** → used to evaluate performance  
+
+---
+
+## Create Train and Test Sets
+
+```{r}
+set.seed(123)
+
+train_index <- sample(seq_len(nrow(df)), size = floor(0.8 * nrow(df)))
+train <- df[train_index, ]
+test  <- df[-train_index, ]
+```
+
+- 80% of the data is used for training  
+- 20% is held out for testing  
+
+---
+
+## Train the Model
+
+```{r}
+lm_train <- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = train)
+```
+
+The model is fit **only on the training data**.
+
+---
+
+## The Wrong Way: Evaluate on Training Data
+
+```{r}
+train_preds_wrong <- predict(lm_train, newdata = train)
+sqrt(mean((train$body_mass_g - train_preds_wrong)^2))
+```
+
+- This often produces a low error  
+- But it is misleading because the model has already seen this data  
+
+> This is like studying using the exact answers to the test.
+
+---
+
+## The Correct Way: Evaluate on Test Data
+
+```{r}
+test_preds <- predict(lm_train, newdata = test)
+sqrt(mean((test$body_mass_g - test_preds)^2))
+```
+
+- This gives a more realistic estimate of performance  
+- It reflects how the model behaves on new data  
+
+---
+
+## Visualizing Predictions
+
+```{r}
+eval_df <- test
+eval_df$predicted_body_mass_g <- test_preds
+
+ggplot(eval_df, aes(x = body_mass_g, y = predicted_body_mass_g)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+  labs(title = "Test Set Predictions")
+```
+
+- Points close to the dashed line indicate good predictions  
+- Larger deviations indicate prediction errors  
+
+---
+
+## Key Takeaways
+
+- Always evaluate models on **data they have not seen**  
+- Training error is often misleading  
+- Test error provides a better estimate of real-world performance  
+
+> A good model is not one that fits the training data perfectly,  
+> but one that generalizes well to new data.

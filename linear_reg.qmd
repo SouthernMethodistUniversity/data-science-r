@@ -1,1 +1,66 @@
 # Linear Regression
+
+```{r}
+#| output: false
+#| echo: false
+
+library(tidyverse)
+library(palmerpenguins)
+df_raw <- penguins
+str(df_raw)
+head(df_raw)
+summary(df_raw)
+df <- df_raw %>%
+  select(species, island, bill_length_mm, bill_depth_mm, flipper_length_mm,
+         body_mass_g, sex) %>%
+  mutate(
+    species = as.factor(species),
+    island = as.factor(island),
+    sex = as.factor(sex),
+    large_body = ifelse(body_mass_g > median(body_mass_g, na.rm = TRUE), 1, 0)
+  ) %>%
+  filter(
+    !is.na(bill_length_mm),
+    !is.na(bill_depth_mm),
+    !is.na(flipper_length_mm),
+    !is.na(body_mass_g),
+    !is.na(sex)
+  )
+```
+
+Linear regression is a statistical method used to model the relationship between a continuous outcome and one or more predictor variables. It fits a line (or plane) that best describes how the outcome changes as the predictors change, allowing us to interpret relationships and make predictions.
+
+## Fit the Model
+
+We will predict body mass using several body measurements.
+
+```{r}
+lm_model <- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = df)
+```
+
+## Inspect the Model
+
+```{r}
+summary(lm_model)
+coef(lm_model)
+```
+
+- `summary()` provides overall model information and statistical significance.
+- `coef()` shows the estimated effect of each predictor.
+
+## Visualize the Relationship
+
+To build intuition, we can visualize one predictor against the outcome and overlay the fitted regression line.
+
+```{r}
+ggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Linear Regression: Body Mass vs Flipper Length")
+```
+
+## Key Takeaways
+
+- Linear regression helps quantify relationships between variables.
+- Coefficients indicate how the outcome changes with each predictor.
+- Visualization is useful for understanding model fit and interpreting results.

@@ -143,11 +143,11 @@ lm_train <- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm,
 
 # WRONG: evaluate on training data
 train_preds_wrong <- predict(lm_train, newdata = train)
-mean((train$body_mass_g - train_preds_wrong)^2)
+sqrt(mean((train$body_mass_g - train_preds_wrong)^2))
 
 # CORRECT: evaluate on test data
 test_preds <- predict(lm_train, newdata = test)
-mean((test$body_mass_g - test_preds)^2)
+sqrt(mean((test$body_mass_g - test_preds)^2))
 
 eval_df <- test
 eval_df$predicted_body_mass_g <- test_preds

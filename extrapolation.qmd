@@ -1,1 +1,96 @@
 # Extrapolation
+
+```{r}
+#| output: false
+#| echo: false
+
+library(tidyverse)
+library(palmerpenguins)
+df_raw <- penguins
+str(df_raw)
+head(df_raw)
+summary(df_raw)
+df <- df_raw %>%
+  select(species, island, bill_length_mm, bill_depth_mm, flipper_length_mm,
+         body_mass_g, sex) %>%
+  mutate(
+    species = as.factor(species),
+    island = as.factor(island),
+    sex = as.factor(sex),
+    large_body = ifelse(body_mass_g > median(body_mass_g, na.rm = TRUE), 1, 0)
+  ) %>%
+  filter(
+    !is.na(bill_length_mm),
+    !is.na(bill_depth_mm),
+    !is.na(flipper_length_mm),
+    !is.na(body_mass_g),
+    !is.na(sex)
+  )
+lm_model <- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = df)
+```
+
+When we use a model to make predictions, it matters whether those predictions fall within the range of data we actually observed. Predictions made inside the observed range are generally more trustworthy, while predictions outside that range require much more caution.
+
+## Interpolation vs. Extrapolation
+
+- **Interpolation** means making predictions **within** the range of values observed in the dataset.
+- **Extrapolation** means making predictions **outside** the range of values observed in the dataset.
+
+Interpolation is usually safer because the model is working in a part of the data space it has actually seen. Extrapolation is riskier because it assumes the same relationship continues beyond the observed data, which may not be true.
+
+## Check the Observed Range
+
+Before making predictions, it is helpful to inspect the range of the predictor variable.
+
+```{r}
+range(df$flipper_length_mm)
+```
+
+This tells us the smallest and largest flipper lengths observed in the data.
+
+## Prediction Inside the Observed Range
+
+Here we make a prediction using values that fall within the range of the dataset.
+
+```{r}
+predict(lm_model, newdata = data.frame(
+  bill_length_mm = 45,
+  bill_depth_mm = 17,
+  flipper_length_mm = 200
+))
+```
+
+Because these values are similar to observations in the dataset, this is an example of **interpolation**.
+
+## Prediction Outside the Observed Range
+
+Now we make a prediction using values outside the observed range.
+
+```{r}
+predict(lm_model, newdata = data.frame(
+  bill_length_mm = 65,
+  bill_depth_mm = 25,
+  flipper_length_mm = 260
+))
+```
+
+This is an example of **extrapolation**. Even though R will still return a prediction, we should be cautious about interpreting it because the model is being asked to make predictions in a region where it has no data.
+
+## Visualizing the Risk
+
+The dashed vertical lines below mark the observed range of flipper lengths in the data.
+
+```{r}
+ggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_vline(xintercept = range(df$flipper_length_mm), linetype = "dashed") +
+  labs(title = "Extrapolation Warning")
+```
+
+## Key Takeaways
+
+- Interpolation uses the model within the range of observed data.
+- Extrapolation uses the model outside the range of observed data.
+- Extrapolated predictions may look precise, but they are often much less reliable.
+- Just because a model can return a prediction does not mean that prediction should be trusted.

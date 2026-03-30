@@ -32,6 +32,7 @@ book:
       chapters:
         - linear_reg.qmd
         - extrapolation.qmd
+        - fitting.qmd
         - train_test_split.qmd
         - logistic_reg.qmd
     - next_steps.qmd
