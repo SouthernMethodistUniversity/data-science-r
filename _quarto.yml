@@ -21,24 +21,19 @@ book:
   chapters:
     - index.qmd
     - part: intro.qmd
-      chapters: 
+      chapters:
         - setup.qmd
-        - basics.qmd
-    - part: objects.qmd
-      chapters: 
-        - data_types.qmd
-        - data_structures.qmd
-        - functions.qmd
-    - part: control.qmd
-      chapters: 
-        - ifelse.qmd
-        - loops.qmd
-    - part: beyond.qmd
-      chapters: 
-        - external.qmd
-    - part: handson.qmd
-      chapters: 
-        - solutions.qmd
+    - part: data_prep.qmd
+      chapters:
+        - data_load.qmd
+        - data_clean.qmd
+        - eda.qmd
+    - part: model.qmd
+      chapters:
+        - linear_reg.qmd
+        - extrapolation.qmd
+        - train_test_split.qmd
+        - logistic_reg.qmd
     - next_steps.qmd
 
 format:
