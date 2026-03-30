@@ -34,27 +34,27 @@
     "href": "intro.html",
     "title": "Introduction",
     "section": "",
-    "text": "What is R?",
+    "text": "What is a Data Science Workflow?",
     "crumbs": [
       "Introduction"
     ]
   },
   {
-    "objectID": "intro.html#what-is-r",
-    "href": "intro.html#what-is-r",
+    "objectID": "intro.html#what-is-a-data-science-workflow",
+    "href": "intro.html#what-is-a-data-science-workflow",
     "title": "Introduction",
     "section": "",
-    "text": "R is a programming language and environment used for statistical computing and data visualization.\nIt was developed as a free and open-source alternative to the S programming language and is built primarily on C and Fortran, with some extensions in C++.\nR is widely used in data science, statistics, and research.\nIt provides powerful tools for data analysis, visualization, and modeling.\nR runs on Windows, Mac, and Linux, making it accessible across different operating systems.\nUsers can extend R by installing packages from CRAN (The Comprehensive R Archive Network), which provides thousands of add-ons for specialized analysis.\nR has an active community and many free resources for learning and troubleshooting.",
+    "text": "A data science workflow is a structured, repeatable process for analyzing data.\nIt typically includes stages such as data cleaning, exploration, modeling, and evaluation.\nRather than jumping straight into modeling, a good workflow emphasizes understanding and preparing the data first.\nA clear workflow helps ensure that analyses are organized, transparent, and reproducible.\nReproducibility means that you (or someone else) can rerun the same analysis and get the same results.\nWorkflows are especially important when working on collaborative projects or scaling to larger datasets.\nIn this workshop, we will focus on a simple, practical workflow:\n\nClean → Explore → Model → Evaluate → Scale",
     "crumbs": [
       "Introduction"
     ]
   },
   {
-    "objectID": "intro.html#why-use-r",
-    "href": "intro.html#why-use-r",
+    "objectID": "intro.html#why-focus-on-workflows",
+    "href": "intro.html#why-focus-on-workflows",
     "title": "Introduction",
-    "section": "Why use R?",
-    "text": "Why use R?\n\nR is a popular language used in statistics and data science.\nR has much more intuitive and extensible visualization libraries compared to other popular programming languages.\nPerfect for publishing reproducible research using Quarto.\nPerfect for creating dashboards using R Shiny.",
+    "section": "Why focus on workflows?",
+    "text": "Why focus on workflows?\n\nMany beginners focus on learning individual tools or models, but struggle to connect them into a coherent process.\nA well-defined workflow helps you know:\n\nwhere to start\nwhat to do next\nhow to avoid common mistakes\n\nMost of the time in real-world data science is spent on data cleaning and preparation—not modeling.\nA consistent workflow makes your work easier to debug, share, and extend.\nProper workflows help prevent common pitfalls such as:\n\noverfitting models\nevaluating models on the wrong data\nmaking unreliable predictions (extrapolation)\n\nThe same workflow you learn here can be applied to:\n\ndifferent datasets\ndifferent models\nlarger computing environments (including HPC)\n\nThe goal of this workshop is not just to build models, but to build good habits for working with data in R.",
     "crumbs": [
       "Introduction"
     ]
@@ -62,31 +62,64 @@
   {
     "objectID": "setup.html",
     "href": "setup.html",
-    "title": "1  Setup",
+    "title": "\n1  Setup\n",
     "section": "",
-    "text": "1.1 Objectives",
+    "text": "1.1 Create a Project\nIn this section, we will set up our working environment and organize our project. A well-structured project is the foundation of a reproducible workflow.\nFirst, create an RStudio Project by selecting File &gt; New Project....\nThen, donwload the code file and place in your project directory: R Code",
     "crumbs": [
       "Introduction",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setup</span>"
     ]
   },
   {
-    "objectID": "setup.html#objectives",
-    "href": "setup.html#objectives",
-    "title": "1  Setup",
-    "section": "",
-    "text": "Get your RStudio environment set up",
+    "objectID": "setup.html#load-required-packages",
+    "href": "setup.html#load-required-packages",
+    "title": "\n1  Setup\n",
+    "section": "\n1.2 Load Required Packages",
+    "text": "1.2 Load Required Packages\nWe will use a small number of packages throughout this workshop:\n\n\ntidyverse for data manipulation and visualization\n\n\npalmerpenguins for our example dataset\n\nIf you do not already have these installed, run:\ninstall.packages(c(\"tidyverse\", \"palmerpenguins\"))\nNow load the packages:\n\nlibrary(tidyverse)\nlibrary(palmerpenguins)",
     "crumbs": [
       "Introduction",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setup</span>"
     ]
   },
   {
-    "objectID": "setup.html#accessing-rstudio",
-    "href": "setup.html#accessing-rstudio",
-    "title": "1  Setup",
-    "section": "1.2 Accessing RStudio",
-    "text": "1.2 Accessing RStudio\nThe best way to write R code is in the RStudio editor, which is a free product created by a company called Posit. You can either install R and RStudio on your computer, or access RStudio in web browser using a free Posit Cloud account\n\n1.2.1 Install on your computer\nTo install R and RStudio on your computer, follow the instructions here. Be sure to install R first, and then install RStudio. You will never need to open the R installation because RStudio automatically finds your R installation.\n\n\n1.2.2 Posit Cloud (web browser)\nPosit Cloud works in the browser with a free account. You can make an account and get started here. This option is recommended for those who regularly use different computers for their work.",
+    "objectID": "setup.html#set-a-seed-for-reproducibility",
+    "href": "setup.html#set-a-seed-for-reproducibility",
+    "title": "\n1  Setup\n",
+    "section": "\n1.3 Set a Seed for Reproducibility",
+    "text": "1.3 Set a Seed for Reproducibility\nSetting a seed ensures that any random operations (such as splitting data into training and testing sets) produce the same results each time the code is run.\n\nset.seed(123)",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setup</span>"
+    ]
+  },
+  {
+    "objectID": "setup.html#project-organization",
+    "href": "setup.html#project-organization",
+    "title": "\n1  Setup\n",
+    "section": "\n1.4 Project Organization",
+    "text": "1.4 Project Organization\nBefore writing any code, it is important to organize your project.\nIn your RStudio Project, manually create the following folders:\n\n\ndata/ → for raw and cleaned datasets\n\n\noutputs/ → for results, plots, and exported files\n\nThis structure helps keep your work organized and makes it easier to rerun or share your analysis.",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setup</span>"
+    ]
+  },
+  {
+    "objectID": "setup.html#create-and-save-the-dataset",
+    "href": "setup.html#create-and-save-the-dataset",
+    "title": "\n1  Setup\n",
+    "section": "Create and Save the Dataset",
+    "text": "Create and Save the Dataset\nWe will use the penguins dataset for this workshop.\nTo simulate working with an external dataset, we will write it to a CSV file inside the data/ folder. This allows us to practice reading data from a file, which is how most real-world workflows begin.\nexample_path &lt;- \"data/penguins.csv\"\n\nif (!file.exists(example_path)) {\n  write_csv(penguins, example_path)\n}",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setup</span>"
+    ]
+  },
+  {
+    "objectID": "setup.html#key-takeaway",
+    "href": "setup.html#key-takeaway",
+    "title": "\n1  Setup\n",
+    "section": "\n1.5 Key Takeaway",
+    "text": "1.5 Key Takeaway\nA reproducible workflow starts with:\n\nclearly organized folders\n\nconsistent file paths\n\nexplicit package usage\n\nand code that can be rerun from start to finish\n\nThese small habits make a big difference as your projects grow in complexity.",
     "crumbs": [
       "Introduction",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setup</span>"
@@ -557,7 +590,7 @@
     "href": "loops.html#apply-functions",
     "title": "\n7  Loops\n",
     "section": "\n7.4 Apply Functions",
-    "text": "7.4 Apply Functions\nThe apply family provides cleaner alternatives to explicit loops.\nThere are functions in R that make looping easier:\n\n\napply() – apply a function over margins of an array\n\n\nlapply() – loop over a list and return a list\n\n\nsapply() – simplified version of lapply()\n\n\nmapply() – multivariate version of lapply()\n\n\ntapply() – apply a function over subsets of a vector\n\n\n7.4.1 apply()\nMost often used to apply a function to rows or columns of a matrix.\n\nm &lt;- matrix(1:12, 3, 4)\nprint(m)\n\n     [,1] [,2] [,3] [,4]\n[1,]    1    4    7   10\n[2,]    2    5    8   11\n[3,]    3    6    9   12\n\napply(m, 1, sum)  # row sums\n\n[1] 22 26 30\n\napply(m, 2, sum)  # column sums\n\n[1]  6 15 24 33\n\n\nSyntax:\napply(X, MARGIN, FUN)\n\n\nX = matrix or array\n\n\nMARGIN = 1 (rows) or 2 (columns)\n\n\nFUN = function to apply\n\nSimilar built-in matrix functions:\n\nrowSums(m)\n\n[1] 22 26 30\n\ncolSums(m)\n\n[1]  6 15 24 33\n\nrowMeans(m)\n\n[1] 5.5 6.5 7.5\n\ncolMeans(m)\n\n[1]  2  5  8 11\n\n\nNote: apply() is not necessarily faster than loops, but it simplifies code.\n\n7.4.2 lapply() and sapply()\nl = long (returns list)\ns = short (simplifies output)\n\nlist1 &lt;- list(\n  l1 = seq(1, 10),\n  l2 = 20:29,\n  l3 = rnorm(4)\n)\n\nlapply(list1, mean)\n\n$l1\n[1] 5.5\n\n$l2\n[1] 24.5\n\n$l3\n[1] 0.1269629\n\nsapply(list1, mean)\n\n        l1         l2         l3 \n 5.5000000 24.5000000  0.1269629 \n\n\n\n\nlapply() always returns a list\n\n\nsapply() tries to simplify the result (vector or matrix)\n\n7.4.3 mapply()\nMultivariate version of lapply().\n\nmapply(sum, 1:3, 4:6)\n\n[1] 5 7 9\n\n\nApplies a function to multiple arguments element-wise.\n\n7.4.4 tapply()\nApplies a function over subsets of a vector.\n\nx &lt;- 1:10\ngroup &lt;- rep(c(\"A\", \"B\"), each = 5)\n\ntapply(x, group, mean)\n\nA B \n3 8 \n\n\nUseful for grouped summaries.",
+    "text": "7.4 Apply Functions\nThe apply family provides cleaner alternatives to explicit loops.\nThere are functions in R that make looping easier:\n\n\napply() – apply a function over margins of an array\n\n\nlapply() – loop over a list and return a list\n\n\nsapply() – simplified version of lapply()\n\n\nmapply() – multivariate version of lapply()\n\n\ntapply() – apply a function over subsets of a vector\n\n\n7.4.1 apply()\nMost often used to apply a function to rows or columns of a matrix.\n\nm &lt;- matrix(1:12, 3, 4)\nprint(m)\n\n     [,1] [,2] [,3] [,4]\n[1,]    1    4    7   10\n[2,]    2    5    8   11\n[3,]    3    6    9   12\n\napply(m, 1, sum)  # row sums\n\n[1] 22 26 30\n\napply(m, 2, sum)  # column sums\n\n[1]  6 15 24 33\n\n\nSyntax:\napply(X, MARGIN, FUN)\n\n\nX = matrix or array\n\n\nMARGIN = 1 (rows) or 2 (columns)\n\n\nFUN = function to apply\n\nSimilar built-in matrix functions:\n\nrowSums(m)\n\n[1] 22 26 30\n\ncolSums(m)\n\n[1]  6 15 24 33\n\nrowMeans(m)\n\n[1] 5.5 6.5 7.5\n\ncolMeans(m)\n\n[1]  2  5  8 11\n\n\nNote: apply() is not necessarily faster than loops, but it simplifies code.\n\n7.4.2 lapply() and sapply()\nl = long (returns list)\ns = short (simplifies output)\n\nlist1 &lt;- list(\n  l1 = seq(1, 10),\n  l2 = 20:29,\n  l3 = rnorm(4)\n)\n\nlapply(list1, mean)\n\n$l1\n[1] 5.5\n\n$l2\n[1] 24.5\n\n$l3\n[1] -0.1571415\n\nsapply(list1, mean)\n\n        l1         l2         l3 \n 5.5000000 24.5000000 -0.1571415 \n\n\n\n\nlapply() always returns a list\n\n\nsapply() tries to simplify the result (vector or matrix)\n\n7.4.3 mapply()\nMultivariate version of lapply().\n\nmapply(sum, 1:3, 4:6)\n\n[1] 5 7 9\n\n\nApplies a function to multiple arguments element-wise.\n\n7.4.4 tapply()\nApplies a function over subsets of a vector.\n\nx &lt;- 1:10\ngroup &lt;- rep(c(\"A\", \"B\"), each = 5)\n\ntapply(x, group, mean)\n\nA B \n3 8 \n\n\nUseful for grouped summaries.",
     "crumbs": [
       "Control Structures",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Loops</span>"

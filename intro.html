@@ -246,8 +246,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-r" id="toc-what-is-r" class="nav-link active" data-scroll-target="#what-is-r">What is R?</a></li>
-  <li><a href="#why-use-r" id="toc-why-use-r" class="nav-link" data-scroll-target="#why-use-r">Why use R?</a></li>
+  <li><a href="#what-is-a-data-science-workflow" id="toc-what-is-a-data-science-workflow" class="nav-link active" data-scroll-target="#what-is-a-data-science-workflow">What is a Data Science Workflow?</a></li>
+  <li><a href="#why-focus-on-workflows" id="toc-why-focus-on-workflows" class="nav-link" data-scroll-target="#why-focus-on-workflows">Why focus on workflows?</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/SouthernMethodistUniversity/data-science-r/edit/main/intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SouthernMethodistUniversity/data-science-r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -273,25 +273,46 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="what-is-r" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="what-is-r">What is R?</h2>
+<section id="what-is-a-data-science-workflow" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="what-is-a-data-science-workflow">What is a Data Science Workflow?</h2>
 <ul>
-<li><p>R is a programming language and environment used for statistical computing and data visualization.</p></li>
-<li><p>It was developed as a free and open-source alternative to the S programming language and is built primarily on C and Fortran, with some extensions in C++.</p></li>
-<li><p>R is widely used in data science, statistics, and research.</p></li>
-<li><p>It provides powerful tools for data analysis, visualization, and modeling.</p></li>
-<li><p>R runs on Windows, Mac, and Linux, making it accessible across different operating systems.</p></li>
-<li><p>Users can extend R by installing packages from CRAN (The Comprehensive R Archive Network), which provides thousands of add-ons for specialized analysis.</p></li>
-<li><p>R has an active community and many free resources for learning and troubleshooting.</p></li>
+<li><p>A data science workflow is a structured, repeatable process for analyzing data.</p></li>
+<li><p>It typically includes stages such as data cleaning, exploration, modeling, and evaluation.</p></li>
+<li><p>Rather than jumping straight into modeling, a good workflow emphasizes understanding and preparing the data first.</p></li>
+<li><p>A clear workflow helps ensure that analyses are organized, transparent, and reproducible.</p></li>
+<li><p>Reproducibility means that you (or someone else) can rerun the same analysis and get the same results.</p></li>
+<li><p>Workflows are especially important when working on collaborative projects or scaling to larger datasets.</p></li>
+<li><p>In this workshop, we will focus on a simple, practical workflow:</p>
+<ul>
+<li>Clean → Explore → Model → Evaluate → Scale</li>
+</ul></li>
 </ul>
 </section>
-<section id="why-use-r" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="why-use-r">Why use R?</h2>
+<section id="why-focus-on-workflows" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="why-focus-on-workflows">Why focus on workflows?</h2>
 <ul>
-<li><p>R is a popular language used in statistics and data science.</p></li>
-<li><p>R has much more intuitive and extensible visualization libraries compared to other popular programming languages.</p></li>
-<li><p>Perfect for publishing reproducible research using Quarto.</p></li>
-<li><p>Perfect for creating dashboards using R Shiny.</p></li>
+<li><p>Many beginners focus on learning individual tools or models, but struggle to connect them into a coherent process.</p></li>
+<li><p>A well-defined workflow helps you know:</p>
+<ul>
+<li>where to start</li>
+<li>what to do next</li>
+<li>how to avoid common mistakes</li>
+</ul></li>
+<li><p>Most of the time in real-world data science is spent on data cleaning and preparation—not modeling.</p></li>
+<li><p>A consistent workflow makes your work easier to debug, share, and extend.</p></li>
+<li><p>Proper workflows help prevent common pitfalls such as:</p>
+<ul>
+<li>overfitting models</li>
+<li>evaluating models on the wrong data</li>
+<li>making unreliable predictions (extrapolation)</li>
+</ul></li>
+<li><p>The same workflow you learn here can be applied to:</p>
+<ul>
+<li>different datasets</li>
+<li>different models</li>
+<li>larger computing environments (including HPC)</li>
+</ul></li>
+<li><p>The goal of this workshop is not just to build models, but to build <strong>good habits</strong> for working with data in R.</p></li>
 </ul>
 
 
