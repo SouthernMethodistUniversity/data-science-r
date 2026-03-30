@@ -2,6 +2,36 @@
 
 Now that you have learned the fundamentals of building a data science workflow in R, here are some resources to help you continue developing your skills.
 
+## Reproducibility and Scaling
+
+One of the key ideas from this workshop is that your workflow should be **reproducible and scalable**.
+
+A good workflow allows you to:
+- rerun your entire analysis from start to finish  
+- save outputs in a consistent and organized way  
+- apply the same process to larger datasets or more powerful computing environments  
+
+For example, you can save model outputs:
+
+```r
+write_csv(eval_df, "outputs/lm_test_predictions.csv")
+```
+
+You can also run your entire workflow as a script:
+
+```bash
+Rscript workshop_workflow.R
+```
+
+This becomes especially useful when:
+- working with larger datasets  
+- automating analyses  
+- running jobs on high-performance computing (HPC) systems  
+
+> The same workflow you used in this workshop can scale from your laptop to much larger systems.
+
+---
+
 ## Workshops
 
 Please visit [LibCal](https://libcal.smu.edu/calendar?cid=15527&t=g&d=0000-00-00&cal=15527&cm=8175&inc=0) to register for additional R workshops. Topics include:

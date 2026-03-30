@@ -1,1 +1,127 @@
 # Logistic Regression
+
+```{r}
+#| output: false
+#| echo: false
+
+library(tidyverse)
+library(palmerpenguins)
+df_raw <- penguins
+str(df_raw)
+head(df_raw)
+summary(df_raw)
+df <- df_raw %>%
+  select(species, island, bill_length_mm, bill_depth_mm, flipper_length_mm,
+         body_mass_g, sex) %>%
+  mutate(
+    species = as.factor(species),
+    island = as.factor(island),
+    sex = as.factor(sex),
+    large_body = ifelse(body_mass_g > median(body_mass_g, na.rm = TRUE), 1, 0)
+  ) %>%
+  filter(
+    !is.na(bill_length_mm),
+    !is.na(bill_depth_mm),
+    !is.na(flipper_length_mm),
+    !is.na(body_mass_g),
+    !is.na(sex)
+  )
+lm_model <- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = df)
+```
+
+Logistic regression is a modeling technique used when the outcome variable is **binary**, meaning it has two possible values (such as 0/1, yes/no, or success/failure). Instead of predicting a continuous value, logistic regression estimates the **probability** that an observation belongs to a particular class.
+
+## Create Train and Test Sets
+
+As before, we split the data so that we can evaluate the model on unseen data.
+
+```{r}
+set.seed(123)
+
+train_index_cls <- sample(seq_len(nrow(df)), size = floor(0.8 * nrow(df)))
+train_cls <- df[train_index_cls, ]
+test_cls  <- df[-train_index_cls, ]
+```
+
+In this example, the outcome variable is:
+
+- `large_body = 1` → above-median body mass  
+- `large_body = 0` → below-median body mass  
+
+---
+
+## Fit the Logistic Regression Model
+
+```{r}
+glm_model <- glm(
+  large_body ~ bill_length_mm + bill_depth_mm + flipper_length_mm,
+  data = train_cls,
+  family = "binomial"
+)
+```
+
+- `glm()` is used for generalized linear models  
+- `family = "binomial"` specifies logistic regression  
+
+---
+
+## Inspect the Model
+
+```{r}
+summary(glm_model)
+```
+
+- Coefficients represent how each predictor affects the **log-odds** of the outcome  
+- Positive values increase the probability of class 1  
+- Negative values decrease the probability of class 1  
+
+---
+
+## Predict Probabilities
+
+```{r}
+prob_preds <- predict(glm_model, newdata = test_cls, type = "response")
+```
+
+- Predictions are probabilities between 0 and 1  
+- These represent the likelihood of belonging to class 1  
+
+---
+
+## Convert Probabilities to Classes
+
+```{r}
+class_preds <- ifelse(prob_preds >= 0.5, 1, 0)
+```
+
+- A threshold (here, 0.5) is used to assign class labels  
+- This converts probabilities into predictions  
+
+---
+
+## Evaluate the Model
+
+```{r}
+mean(class_preds == test_cls$large_body)
+```
+
+- This computes **accuracy**, the proportion of correct predictions  
+
+```{r}
+table(actual = test_cls$large_body, predicted = class_preds)
+```
+
+- This is a **confusion matrix**  
+- It shows how many predictions were correct vs incorrect  
+
+---
+
+## Key Takeaways
+
+- Logistic regression is used for **binary outcomes**  
+- The model predicts probabilities, not just classes  
+- A threshold is used to convert probabilities into predictions  
+- Evaluation should be done on a **test dataset**  
+
+> Like linear regression, the goal is not just to fit the data,  
+> but to make reliable predictions on new observations.
