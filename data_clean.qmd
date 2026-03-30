@@ -1,1 +1,59 @@
 # Data Cleaning
+
+In this section, we clean and prepare the dataset for analysis. Data cleaning is a critical step in any workflow, as real-world data is often incomplete or inconsistent.
+
+## Clean and Transform the Data
+
+We will:
+
+- select relevant variables  
+- convert categorical variables to factors  
+- create a new feature  
+- remove missing values
+
+```{r}
+#| output: false
+#| echo: false
+
+library(tidyverse)
+library(palmerpenguins)
+df_raw <- penguins
+str(df_raw)
+head(df_raw)
+summary(df_raw)
+```
+
+```{r}
+df <- df_raw %>%
+  select(species, island, bill_length_mm, bill_depth_mm, flipper_length_mm,
+         body_mass_g, sex) %>%
+  mutate(
+    species = as.factor(species),
+    island = as.factor(island),
+    sex = as.factor(sex),
+    large_body = ifelse(body_mass_g > median(body_mass_g, na.rm = TRUE), 1, 0)
+  ) %>%
+  filter(
+    !is.na(bill_length_mm),
+    !is.na(bill_depth_mm),
+    !is.na(flipper_length_mm),
+    !is.na(body_mass_g),
+    !is.na(sex)
+  )
+```
+
+## Inspect the Cleaned Data
+
+```{r}
+str(df)
+summary(df)
+```
+
+## Compare Before and After
+
+```{r}
+nrow(df_raw)
+nrow(df)
+```
+
+This comparison shows how many observations were removed during cleaning, reinforcing that data preparation can significantly impact your dataset.

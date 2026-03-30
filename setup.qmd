@@ -6,7 +6,7 @@ In this section, we will set up our working environment and organize our project
 
 First, create an RStudio Project by selecting `File` > `New Project...`.
 
-Then, donwload the code file and place in your project directory: [R Code](code/script.R)
+Then, download the code file and place in your project directory: [R Code](code/script.R)
 
 ## Load Required Packages
 
