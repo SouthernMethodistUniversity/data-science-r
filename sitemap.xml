@@ -2,54 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/index.html</loc>
-    <lastmod>2026-03-30T13:04:37.550Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.829Z</lastmod>
   </url>
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/intro.html</loc>
-    <lastmod>2026-03-30T13:04:37.550Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.830Z</lastmod>
   </url>
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/setup.html</loc>
-    <lastmod>2026-03-30T13:04:37.551Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.830Z</lastmod>
   </url>
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/data_prep.html</loc>
-    <lastmod>2026-03-30T13:04:37.546Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.825Z</lastmod>
   </url>
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/data_load.html</loc>
-    <lastmod>2026-03-30T13:04:37.546Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.825Z</lastmod>
   </url>
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/data_clean.html</loc>
-    <lastmod>2026-03-30T13:04:37.546Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.825Z</lastmod>
   </url>
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/eda.html</loc>
-    <lastmod>2026-03-30T13:04:37.546Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.825Z</lastmod>
   </url>
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/model.html</loc>
-    <lastmod>2026-03-30T13:04:37.550Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.830Z</lastmod>
   </url>
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/linear_reg.html</loc>
-    <lastmod>2026-03-30T13:04:37.550Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.830Z</lastmod>
   </url>
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/extrapolation.html</loc>
-    <lastmod>2026-03-30T13:04:37.546Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.825Z</lastmod>
+  </url>
+  <url>
+    <loc>https://southernmethodistuniversity.github.io/data-science-r/fitting.html</loc>
+    <lastmod>2026-03-30T13:25:45.826Z</lastmod>
   </url>
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/train_test_split.html</loc>
-    <lastmod>2026-03-30T13:04:37.551Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.830Z</lastmod>
   </url>
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/logistic_reg.html</loc>
-    <lastmod>2026-03-30T13:04:37.550Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.830Z</lastmod>
   </url>
   <url>
     <loc>https://southernmethodistuniversity.github.io/data-science-r/next_steps.html</loc>
-    <lastmod>2026-03-30T13:04:37.551Z</lastmod>
+    <lastmod>2026-03-30T13:25:45.830Z</lastmod>
   </url>
 </urlset>

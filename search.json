@@ -289,6 +289,281 @@
     ]
   },
   {
+    "objectID": "linear_reg.html",
+    "href": "linear_reg.html",
+    "title": "\n5  Linear Regression\n",
+    "section": "",
+    "text": "5.1 Fit the Model\nLinear regression is a statistical method used to model the relationship between a continuous outcome and one or more predictor variables. It fits a line (or plane) that best describes how the outcome changes as the predictors change, allowing us to interpret relationships and make predictions.\nWe will predict body mass using several body measurements.\nlm_model &lt;- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = df)",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "linear_reg.html#inspect-the-model",
+    "href": "linear_reg.html#inspect-the-model",
+    "title": "\n5  Linear Regression\n",
+    "section": "\n5.2 Inspect the Model",
+    "text": "5.2 Inspect the Model\n\nsummary(lm_model)\n\n\nCall:\nlm(formula = body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, \n    data = df)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-1051.37  -284.50   -20.37   241.03  1283.51 \n\nCoefficients:\n                   Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)       -6445.476    566.130 -11.385   &lt;2e-16 ***\nbill_length_mm        3.293      5.366   0.614    0.540    \nbill_depth_mm        17.836     13.826   1.290    0.198    \nflipper_length_mm    50.762      2.497  20.327   &lt;2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 393 on 329 degrees of freedom\nMultiple R-squared:  0.7639,    Adjusted R-squared:  0.7618 \nF-statistic: 354.9 on 3 and 329 DF,  p-value: &lt; 2.2e-16\n\ncoef(lm_model)\n\n      (Intercept)    bill_length_mm     bill_depth_mm flipper_length_mm \n     -6445.476043          3.292863         17.836391         50.762132 \n\n\n\n\nsummary() provides overall model information and statistical significance.\n\ncoef() shows the estimated effect of each predictor.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "linear_reg.html#visualize-the-relationship",
+    "href": "linear_reg.html#visualize-the-relationship",
+    "title": "\n5  Linear Regression\n",
+    "section": "\n5.3 Visualize the Relationship",
+    "text": "5.3 Visualize the Relationship\nTo build intuition, we can visualize one predictor against the outcome and overlay the fitted regression line.\n\nggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +\n  geom_point() +\n  geom_smooth(method = \"lm\") +\n  labs(title = \"Linear Regression: Body Mass vs Flipper Length\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "linear_reg.html#key-takeaways",
+    "href": "linear_reg.html#key-takeaways",
+    "title": "\n5  Linear Regression\n",
+    "section": "\n5.4 Key Takeaways",
+    "text": "5.4 Key Takeaways\n\nLinear regression helps quantify relationships between variables.\nCoefficients indicate how the outcome changes with each predictor.\nVisualization is useful for understanding model fit and interpreting results.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "extrapolation.html",
+    "href": "extrapolation.html",
+    "title": "\n6  Extrapolation\n",
+    "section": "",
+    "text": "6.1 Interpolation vs. Extrapolation\nWhen we use a model to make predictions, it matters whether those predictions fall within the range of data we actually observed. Predictions made inside the observed range are generally more trustworthy, while predictions outside that range require much more caution.\nInterpolation is usually safer because the model is working in a part of the data space it has actually seen. Extrapolation is riskier because it assumes the same relationship continues beyond the observed data, which may not be true.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Extrapolation</span>"
+    ]
+  },
+  {
+    "objectID": "extrapolation.html#interpolation-vs.-extrapolation",
+    "href": "extrapolation.html#interpolation-vs.-extrapolation",
+    "title": "\n6  Extrapolation\n",
+    "section": "",
+    "text": "Interpolation means making predictions within the range of values observed in the dataset.\n\nExtrapolation means making predictions outside the range of values observed in the dataset.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Extrapolation</span>"
+    ]
+  },
+  {
+    "objectID": "extrapolation.html#check-the-observed-range",
+    "href": "extrapolation.html#check-the-observed-range",
+    "title": "\n6  Extrapolation\n",
+    "section": "\n6.2 Check the Observed Range",
+    "text": "6.2 Check the Observed Range\nBefore making predictions, it is helpful to inspect the range of the predictor variable.\n\nrange(df$flipper_length_mm)\n\n[1] 172 231\n\n\nThis tells us the smallest and largest flipper lengths observed in the data.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Extrapolation</span>"
+    ]
+  },
+  {
+    "objectID": "extrapolation.html#prediction-inside-the-observed-range",
+    "href": "extrapolation.html#prediction-inside-the-observed-range",
+    "title": "\n6  Extrapolation\n",
+    "section": "\n6.3 Prediction Inside the Observed Range",
+    "text": "6.3 Prediction Inside the Observed Range\nHere we make a prediction using values that fall within the range of the dataset.\n\npredict(lm_model, newdata = data.frame(\n  bill_length_mm = 45,\n  bill_depth_mm = 17,\n  flipper_length_mm = 200\n))\n\n       1 \n4158.348 \n\n\nBecause these values are similar to observations in the dataset, this is an example of interpolation.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Extrapolation</span>"
+    ]
+  },
+  {
+    "objectID": "extrapolation.html#prediction-outside-the-observed-range",
+    "href": "extrapolation.html#prediction-outside-the-observed-range",
+    "title": "\n6  Extrapolation\n",
+    "section": "\n6.4 Prediction Outside the Observed Range",
+    "text": "6.4 Prediction Outside the Observed Range\nNow we make a prediction using values outside the observed range.\n\npredict(lm_model, newdata = data.frame(\n  bill_length_mm = 65,\n  bill_depth_mm = 25,\n  flipper_length_mm = 260\n))\n\n       1 \n7412.624 \n\n\nThis is an example of extrapolation. Even though R will still return a prediction, we should be cautious about interpreting it because the model is being asked to make predictions in a region where it has no data.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Extrapolation</span>"
+    ]
+  },
+  {
+    "objectID": "extrapolation.html#visualizing-the-risk",
+    "href": "extrapolation.html#visualizing-the-risk",
+    "title": "\n6  Extrapolation\n",
+    "section": "\n6.5 Visualizing the Risk",
+    "text": "6.5 Visualizing the Risk\nThe dashed vertical lines below mark the observed range of flipper lengths in the data.\n\nggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", se = FALSE) +\n  geom_vline(xintercept = range(df$flipper_length_mm), linetype = \"dashed\") +\n  labs(title = \"Extrapolation Warning\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Extrapolation</span>"
+    ]
+  },
+  {
+    "objectID": "extrapolation.html#key-takeaways",
+    "href": "extrapolation.html#key-takeaways",
+    "title": "\n6  Extrapolation\n",
+    "section": "\n6.6 Key Takeaways",
+    "text": "6.6 Key Takeaways\n\nInterpolation uses the model within the range of observed data.\nExtrapolation uses the model outside the range of observed data.\nExtrapolated predictions may look precise, but they are often much less reliable.\nJust because a model can return a prediction does not mean that prediction should be trusted.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Extrapolation</span>"
+    ]
+  },
+  {
+    "objectID": "fitting.html",
+    "href": "fitting.html",
+    "title": "7  Underfitting and Overfitting",
+    "section": "",
+    "text": "7.1 Underfitting\nWhen building models, one of the most important questions is:\nThe image below illustrates three different scenarios: underfitting, good fit, and overfitting.\nThe model on the left is too simple.\nThis is called underfitting.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Underfitting and Overfitting</span>"
+    ]
+  },
+  {
+    "objectID": "fitting.html#underfitting",
+    "href": "fitting.html#underfitting",
+    "title": "7  Underfitting and Overfitting",
+    "section": "",
+    "text": "It fails to capture the overall shape of the data.\nImportant patterns are missed.\nThe model has high error because it cannot represent the relationship well.\n\n\n\nThe model is not flexible enough.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Underfitting and Overfitting</span>"
+    ]
+  },
+  {
+    "objectID": "fitting.html#good-fit",
+    "href": "fitting.html#good-fit",
+    "title": "7  Underfitting and Overfitting",
+    "section": "7.2 Good Fit",
+    "text": "7.2 Good Fit\nThe model in the middle represents a good fit.\n\nIt captures the general pattern of the data.\nIt smooths over noise rather than trying to match every point.\nIt balances simplicity and flexibility.\n\nThis is what we aim for in practice.\n\nThe model captures the signal, not the noise.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Underfitting and Overfitting</span>"
+    ]
+  },
+  {
+    "objectID": "fitting.html#overfitting",
+    "href": "fitting.html#overfitting",
+    "title": "7  Underfitting and Overfitting",
+    "section": "7.3 Overfitting",
+    "text": "7.3 Overfitting\nThe model on the right is too complex.\n\nIt tries to pass through nearly every data point.\nIt captures noise instead of just the underlying pattern.\nIt may look very accurate on the training data, but performs poorly on new data.\n\nThis is called overfitting.\n\nThe model is too flexible—it memorizes rather than generalizes.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Underfitting and Overfitting</span>"
+    ]
+  },
+  {
+    "objectID": "fitting.html#why-this-matters",
+    "href": "fitting.html#why-this-matters",
+    "title": "7  Underfitting and Overfitting",
+    "section": "7.4 Why This Matters",
+    "text": "7.4 Why This Matters\nOverfitting and underfitting are two common pitfalls in modeling:\n\nUnderfitting → model is too simple → poor performance everywhere\n\nOverfitting → model is too complex → poor performance on new data\n\nA good model should:\n\ncapture the main structure in the data\n\ngeneralize well to unseen data",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Underfitting and Overfitting</span>"
+    ]
+  },
+  {
+    "objectID": "fitting.html#key-takeaway",
+    "href": "fitting.html#key-takeaway",
+    "title": "7  Underfitting and Overfitting",
+    "section": "7.5 Key Takeaway",
+    "text": "7.5 Key Takeaway\n\nThe goal is not to perfectly match the data you have,\nbut to build a model that works well on data you haven’t seen.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Underfitting and Overfitting</span>"
+    ]
+  },
+  {
+    "objectID": "train_test_split.html",
+    "href": "train_test_split.html",
+    "title": "\n8  Training and Testing\n",
+    "section": "",
+    "text": "8.1 Why Split the Data?\nWhen building models, it is important to evaluate how well they perform on new, unseen data. If we only evaluate a model on the same data it was trained on, we can get overly optimistic results.\nIf we train and test on the same dataset:\nTo address this, we split the data into:",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Training and Testing</span>"
+    ]
+  },
+  {
+    "objectID": "train_test_split.html#why-split-the-data",
+    "href": "train_test_split.html#why-split-the-data",
+    "title": "\n8  Training and Testing\n",
+    "section": "",
+    "text": "the model has already “seen” the data\n\nit can appear more accurate than it really is\n\nwe cannot tell how well it will perform in practice\n\n\n\n\nTraining set → used to fit the model\n\n\nTest set → used to evaluate performance",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Training and Testing</span>"
+    ]
+  },
+  {
+    "objectID": "train_test_split.html#create-train-and-test-sets",
+    "href": "train_test_split.html#create-train-and-test-sets",
+    "title": "\n8  Training and Testing\n",
+    "section": "\n8.2 Create Train and Test Sets",
+    "text": "8.2 Create Train and Test Sets\n\nset.seed(123)\n\ntrain_index &lt;- sample(seq_len(nrow(df)), size = floor(0.8 * nrow(df)))\ntrain &lt;- df[train_index, ]\ntest  &lt;- df[-train_index, ]\n\n\n80% of the data is used for training\n\n20% is held out for testing",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Training and Testing</span>"
+    ]
+  },
+  {
+    "objectID": "train_test_split.html#train-the-model",
+    "href": "train_test_split.html#train-the-model",
+    "title": "\n8  Training and Testing\n",
+    "section": "\n8.3 Train the Model",
+    "text": "8.3 Train the Model\n\nlm_train &lt;- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = train)\n\nThe model is fit only on the training data.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Training and Testing</span>"
+    ]
+  },
+  {
+    "objectID": "train_test_split.html#the-wrong-way-evaluate-on-training-data",
+    "href": "train_test_split.html#the-wrong-way-evaluate-on-training-data",
+    "title": "\n8  Training and Testing\n",
+    "section": "\n8.4 The Wrong Way: Evaluate on Training Data",
+    "text": "8.4 The Wrong Way: Evaluate on Training Data\n\ntrain_preds_wrong &lt;- predict(lm_train, newdata = train)\nsqrt(mean((train$body_mass_g - train_preds_wrong)^2))\n\n[1] 397.3888\n\n\n\nThis often produces a low error\n\nBut it is misleading because the model has already seen this data\n\n\nThis is like studying using the exact answers to the test.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Training and Testing</span>"
+    ]
+  },
+  {
+    "objectID": "train_test_split.html#the-correct-way-evaluate-on-test-data",
+    "href": "train_test_split.html#the-correct-way-evaluate-on-test-data",
+    "title": "\n8  Training and Testing\n",
+    "section": "\n8.5 The Correct Way: Evaluate on Test Data",
+    "text": "8.5 The Correct Way: Evaluate on Test Data\n\ntest_preds &lt;- predict(lm_train, newdata = test)\nsqrt(mean((test$body_mass_g - test_preds)^2))\n\n[1] 364.3985\n\n\n\nThis gives a more realistic estimate of performance\n\nIt reflects how the model behaves on new data",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Training and Testing</span>"
+    ]
+  },
+  {
+    "objectID": "train_test_split.html#visualizing-predictions",
+    "href": "train_test_split.html#visualizing-predictions",
+    "title": "\n8  Training and Testing\n",
+    "section": "\n8.6 Visualizing Predictions",
+    "text": "8.6 Visualizing Predictions\n\neval_df &lt;- test\neval_df$predicted_body_mass_g &lt;- test_preds\n\nggplot(eval_df, aes(x = body_mass_g, y = predicted_body_mass_g)) +\n  geom_point() +\n  geom_abline(slope = 1, intercept = 0, linetype = \"dashed\") +\n  labs(title = \"Test Set Predictions\")\n\n\n\n\n\n\n\n\nPoints close to the dashed line indicate good predictions\n\nLarger deviations indicate prediction errors",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Training and Testing</span>"
+    ]
+  },
+  {
+    "objectID": "train_test_split.html#key-takeaways",
+    "href": "train_test_split.html#key-takeaways",
+    "title": "\n8  Training and Testing\n",
+    "section": "\n8.7 Key Takeaways",
+    "text": "8.7 Key Takeaways\n\nAlways evaluate models on data they have not seen\n\nTraining error is often misleading\n\nTest error provides a better estimate of real-world performance\n\n\nA good model is not one that fits the training data perfectly,\nbut one that generalizes well to new data.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Training and Testing</span>"
+    ]
+  },
+  {
     "objectID": "next_steps.html",
     "href": "next_steps.html",
     "title": "Next Steps",

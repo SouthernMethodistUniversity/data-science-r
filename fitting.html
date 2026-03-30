@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.25">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="SMU OIT Research Technology Services">
-<title>4&nbsp; Exploratory Data Analysis – Data Science Workflows in R</title>
+
+<title>7&nbsp; Underfitting and Overfitting – Data Science Workflows in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,42 +21,8 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
+
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -61,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./model.html" rel="next">
-<link href="./data_clean.html" rel="prev">
+<link href="./train_test_split.html" rel="next">
+<link href="./extrapolation.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -73,7 +42,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-677bb2f131c9b21e33ed75076641453a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-677bb2f131c9b21e33ed75076641453a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -100,26 +70,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+
+
 </head>
+
 <body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_prep.html">Data Preparation</a></li><li class="breadcrumb-item"><a href="./eda.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./model.html">Data Modelling</a></li><li class="breadcrumb-item"><a href="./fitting.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Underfitting and Overfitting</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/logo_stack.svg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none"><img src="./images/logo_stack.svg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none"></a>
+      <img src="./images/logo_stack.svg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./images/logo_stack.svg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science Workflows in R</a> 
         <div class="sidebar-tools-main">
@@ -134,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
@@ -148,15 +129,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setup</span></span></a>
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./data_prep.html" class="sidebar-item-text sidebar-link">
@@ -165,8 +146,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./data_load.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Loading</span></span></a>
@@ -180,12 +161,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./eda.html" class="sidebar-item-text sidebar-link active">
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./model.html" class="sidebar-item-text sidebar-link">
@@ -194,8 +175,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_reg.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
@@ -209,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fitting.html" class="sidebar-item-text sidebar-link">
+  <a href="./fitting.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Underfitting and Overfitting</span></span></a>
   </div>
 </li>
@@ -226,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./next_steps.html" class="sidebar-item-text sidebar-link">
@@ -234,25 +215,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#distribution-of-body-mass" id="toc-distribution-of-body-mass" class="nav-link active" data-scroll-target="#distribution-of-body-mass"><span class="header-section-number">4.1</span> Distribution of Body Mass</a></li>
-  <li><a href="#body-mass-vs-flipper-length" id="toc-body-mass-vs-flipper-length" class="nav-link" data-scroll-target="#body-mass-vs-flipper-length"><span class="header-section-number">4.2</span> Body Mass vs Flipper Length</a></li>
-  <li><a href="#body-mass-vs-bill-length" id="toc-body-mass-vs-bill-length" class="nav-link" data-scroll-target="#body-mass-vs-bill-length"><span class="header-section-number">4.3</span> Body Mass vs Bill Length</a></li>
-  <li><a href="#body-mass-by-species" id="toc-body-mass-by-species" class="nav-link" data-scroll-target="#body-mass-by-species"><span class="header-section-number">4.4</span> Body Mass by Species</a></li>
-  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">4.5</span> Key Takeaways</a></li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/SouthernMethodistUniversity/data-science-r/edit/main/eda.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SouthernMethodistUniversity/data-science-r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  <li><a href="#underfitting" id="toc-underfitting" class="nav-link active" data-scroll-target="#underfitting"><span class="header-section-number">7.1</span> Underfitting</a></li>
+  <li><a href="#good-fit" id="toc-good-fit" class="nav-link" data-scroll-target="#good-fit"><span class="header-section-number">7.2</span> Good Fit</a></li>
+  <li><a href="#overfitting" id="toc-overfitting" class="nav-link" data-scroll-target="#overfitting"><span class="header-section-number">7.3</span> Overfitting</a></li>
+  <li><a href="#why-this-matters" id="toc-why-this-matters" class="nav-link" data-scroll-target="#why-this-matters"><span class="header-section-number">7.4</span> Why This Matters</a></li>
+  <li><a href="#key-takeaway" id="toc-key-takeaway" class="nav-link" data-scroll-target="#key-takeaway"><span class="header-section-number">7.5</span> Key Takeaway</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/SouthernMethodistUniversity/data-science-r/edit/main/fitting.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SouthernMethodistUniversity/data-science-r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_prep.html">Data Preparation</a></li><li class="breadcrumb-item"><a href="./eda.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></a></li></ol></nav><div class="quarto-title">
-<h1 class="title">
-<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span>
-</h1>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./model.html">Data Modelling</a></li><li class="breadcrumb-item"><a href="./fitting.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Underfitting and Overfitting</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Underfitting and Overfitting</span></h1>
 </div>
 
 
@@ -266,81 +251,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><p>In this section, we begin exploring the cleaned dataset. Exploratory Data Analysis (EDA) helps us understand the structure of the data, identify patterns, and guide our modeling decisions.</p>
-<p>EDA is an important step because it allows us to: - understand distributions of variables<br>
-- identify relationships between variables<br>
-- detect potential outliers or unusual values<br>
-- build intuition before fitting models</p>
-<section id="distribution-of-body-mass" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="distribution-of-body-mass">
-<span class="header-section-number">4.1</span> Distribution of Body Mass</h2>
-<p>We start by examining the distribution of body mass to understand its overall shape.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass_g</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_histogram</span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Distribution of Body Mass"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="eda_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section><section id="body-mass-vs-flipper-length" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="body-mass-vs-flipper-length">
-<span class="header-section-number">4.2</span> Body Mass vs Flipper Length</h2>
-<p>Next, we explore the relationship between flipper length and body mass.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">flipper_length_mm</span>, y <span class="op">=</span> <span class="va">body_mass_g</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Body Mass vs Flipper Length"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="eda_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section><section id="body-mass-vs-bill-length" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="body-mass-vs-bill-length">
-<span class="header-section-number">4.3</span> Body Mass vs Bill Length</h2>
-<p>We also examine how bill length relates to body mass.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">bill_length_mm</span>, y <span class="op">=</span> <span class="va">body_mass_g</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Body Mass vs Bill Length"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="eda_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section><section id="body-mass-by-species" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="body-mass-by-species">
-<span class="header-section-number">4.4</span> Body Mass by Species</h2>
-<p>Finally, we compare body mass across different penguin species.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">species</span>, y <span class="op">=</span> <span class="va">body_mass_g</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Body Mass by Species"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="eda_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section><section id="key-takeaways" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="key-takeaways">
-<span class="header-section-number">4.5</span> Key Takeaways</h2>
-<p>From these plots, we can begin to see patterns in the data:</p>
+</header>
+
+
+<p>When building models, one of the most important questions is:</p>
+<blockquote class="blockquote">
+<p>How well does the model capture the true underlying pattern in the data?</p>
+</blockquote>
+<p>The image below illustrates three different scenarios: underfitting, good fit, and overfitting.</p>
+<p><img src="images/over_under.png" class="img-fluid"></p>
+<section id="underfitting" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="underfitting"><span class="header-section-number">7.1</span> Underfitting</h2>
+<p>The model on the left is <strong>too simple</strong>.</p>
 <ul>
-<li>body mass has a clear distribution<br>
-</li>
-<li>some variables appear to have relationships with body mass<br>
-</li>
-<li>differences between species may be important</li>
+<li>It fails to capture the overall shape of the data.</li>
+<li>Important patterns are missed.</li>
+<li>The model has <strong>high error</strong> because it cannot represent the relationship well.</li>
 </ul>
-<p>These insights will guide how we build and interpret our models in the next section.</p>
+<p>This is called <strong>underfitting</strong>.</p>
+<blockquote class="blockquote">
+<p>The model is not flexible enough.</p>
+</blockquote>
+<hr>
+</section>
+<section id="good-fit" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="good-fit"><span class="header-section-number">7.2</span> Good Fit</h2>
+<p>The model in the middle represents a <strong>good fit</strong>.</p>
+<ul>
+<li>It captures the general pattern of the data.</li>
+<li>It smooths over noise rather than trying to match every point.</li>
+<li>It balances simplicity and flexibility.</li>
+</ul>
+<p>This is what we aim for in practice.</p>
+<blockquote class="blockquote">
+<p>The model captures the signal, not the noise.</p>
+</blockquote>
+<hr>
+</section>
+<section id="overfitting" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="overfitting"><span class="header-section-number">7.3</span> Overfitting</h2>
+<p>The model on the right is <strong>too complex</strong>.</p>
+<ul>
+<li>It tries to pass through nearly every data point.</li>
+<li>It captures noise instead of just the underlying pattern.</li>
+<li>It may look very accurate on the training data, but performs poorly on new data.</li>
+</ul>
+<p>This is called <strong>overfitting</strong>.</p>
+<blockquote class="blockquote">
+<p>The model is too flexible—it memorizes rather than generalizes.</p>
+</blockquote>
+<hr>
+</section>
+<section id="why-this-matters" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="why-this-matters"><span class="header-section-number">7.4</span> Why This Matters</h2>
+<p>Overfitting and underfitting are two common pitfalls in modeling:</p>
+<ul>
+<li><strong>Underfitting</strong> → model is too simple → poor performance everywhere<br>
+</li>
+<li><strong>Overfitting</strong> → model is too complex → poor performance on new data</li>
+</ul>
+<p>A good model should:</p>
+<ul>
+<li>capture the main structure in the data<br>
+</li>
+<li>generalize well to unseen data</li>
+</ul>
+<hr>
+</section>
+<section id="key-takeaway" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="key-takeaway"><span class="header-section-number">7.5</span> Key Takeaway</h2>
+<blockquote class="blockquote">
+<p>The goal is not to perfectly match the data you have,<br>
+but to build a model that works well on data you haven’t seen.</p>
+</blockquote>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -739,30 +728,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       }
     }
   });
-  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./data_clean.html" class="pagination-link" aria-label="Data Cleaning">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Cleaning</span></span>
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./extrapolation.html" class="pagination-link" aria-label="Extrapolation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Extrapolation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./model.html" class="pagination-link" aria-label="Data Modelling">
-        <span class="nav-page-text">Data Modelling</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./train_test_split.html" class="pagination-link" aria-label="Training and Testing">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Training and Testing</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/SouthernMethodistUniversity/data-science-r/edit/main/eda.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SouthernMethodistUniversity/data-science-r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/SouthernMethodistUniversity/data-science-r/edit/main/fitting.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SouthernMethodistUniversity/data-science-r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p><a href="http://creativecommons.org/licenses/by-sa/4.0/"><img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"></a></p>
 </div>
   </div>
 </footer>
+
+
 
 
 </body></html>
