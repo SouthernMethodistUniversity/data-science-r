@@ -5,7 +5,7 @@ project:
     - code/**
 
 book:
-  title: "Introduction to R Workshop"
+  title: "Data Science Workflows in R"
   author: "OIT Research Technology Services"
   reader-mode: false
   cover-image: images/r_logo.png
@@ -14,8 +14,8 @@ book:
     pinned: true
   page-footer:
     right: <a href="http://creativecommons.org/licenses/by-sa/4.0/"><img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"></a>
-  site-url: https://southernmethodistuniversity.github.io/intro-to-r/
-  repo-url: https://github.com/SouthernMethodistUniversity/intro-to-r
+  site-url: https://southernmethodistuniversity.github.io/data-science-r/
+  repo-url: https://github.com/SouthernMethodistUniversity/data-science-r
   repo-branch: main
   repo-actions: [edit, issue]
   chapters:
