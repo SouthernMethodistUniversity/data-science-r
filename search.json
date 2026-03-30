@@ -2,7 +2,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Introduction to R Workshop",
+    "title": "Data Science Workflows in R",
     "section": "",
     "text": "Welcome\nThis workshop introduces participants to building reproducible data science workflows in R. Rather than focusing on programming syntax alone, we will walk through the full lifecycle of a data analysis project—from data cleaning and exploration to modeling and evaluation—using a single, consistent workflow.\nParticipants will gain hands-on experience working with real data, emphasizing the importance of careful data preparation, clear organization, and proper model evaluation. We will also introduce foundational modeling techniques, including linear and logistic regression, and discuss how these workflows scale to larger datasets and high-performance computing environments.\nThe content for this workshop is developed and taught by the OIT Research Technology Services team at SMU in collaboration with SMU Libraries.",
     "crumbs": [
@@ -12,7 +12,7 @@
   {
     "objectID": "index.html#objectives",
     "href": "index.html#objectives",
-    "title": "Introduction to R Workshop",
+    "title": "Data Science Workflows in R",
     "section": "Objectives",
     "text": "Objectives\n\nUnderstand the structure of a reproducible data science workflow in R.\nLearn how to organize projects and work with data in a consistent, repeatable way.\nGain experience cleaning and preparing real-world datasets for analysis.\nPerform exploratory data analysis using visualization and summary statistics.\nBuild and interpret linear and logistic regression models.\nLearn how to properly evaluate models using train/test splits.\nRecognize common pitfalls such as overfitting and extrapolation.\nUnderstand how these workflows can scale to larger datasets and computing environments.",
     "crumbs": [
@@ -22,7 +22,7 @@
   {
     "objectID": "index.html#license",
     "href": "index.html#license",
-    "title": "Introduction to R Workshop",
+    "title": "Data Science Workflows in R",
     "section": "License",
     "text": "License\n\nThe content in this workshop is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.",
     "crumbs": [
@@ -557,7 +557,7 @@
     "href": "loops.html#apply-functions",
     "title": "\n7  Loops\n",
     "section": "\n7.4 Apply Functions",
-    "text": "7.4 Apply Functions\nThe apply family provides cleaner alternatives to explicit loops.\nThere are functions in R that make looping easier:\n\n\napply() – apply a function over margins of an array\n\n\nlapply() – loop over a list and return a list\n\n\nsapply() – simplified version of lapply()\n\n\nmapply() – multivariate version of lapply()\n\n\ntapply() – apply a function over subsets of a vector\n\n\n7.4.1 apply()\nMost often used to apply a function to rows or columns of a matrix.\n\nm &lt;- matrix(1:12, 3, 4)\nprint(m)\n\n     [,1] [,2] [,3] [,4]\n[1,]    1    4    7   10\n[2,]    2    5    8   11\n[3,]    3    6    9   12\n\napply(m, 1, sum)  # row sums\n\n[1] 22 26 30\n\napply(m, 2, sum)  # column sums\n\n[1]  6 15 24 33\n\n\nSyntax:\napply(X, MARGIN, FUN)\n\n\nX = matrix or array\n\n\nMARGIN = 1 (rows) or 2 (columns)\n\n\nFUN = function to apply\n\nSimilar built-in matrix functions:\n\nrowSums(m)\n\n[1] 22 26 30\n\ncolSums(m)\n\n[1]  6 15 24 33\n\nrowMeans(m)\n\n[1] 5.5 6.5 7.5\n\ncolMeans(m)\n\n[1]  2  5  8 11\n\n\nNote: apply() is not necessarily faster than loops, but it simplifies code.\n\n7.4.2 lapply() and sapply()\nl = long (returns list)\ns = short (simplifies output)\n\nlist1 &lt;- list(\n  l1 = seq(1, 10),\n  l2 = 20:29,\n  l3 = rnorm(4)\n)\n\nlapply(list1, mean)\n\n$l1\n[1] 5.5\n\n$l2\n[1] 24.5\n\n$l3\n[1] 0.4490619\n\nsapply(list1, mean)\n\n        l1         l2         l3 \n 5.5000000 24.5000000  0.4490619 \n\n\n\n\nlapply() always returns a list\n\n\nsapply() tries to simplify the result (vector or matrix)\n\n7.4.3 mapply()\nMultivariate version of lapply().\n\nmapply(sum, 1:3, 4:6)\n\n[1] 5 7 9\n\n\nApplies a function to multiple arguments element-wise.\n\n7.4.4 tapply()\nApplies a function over subsets of a vector.\n\nx &lt;- 1:10\ngroup &lt;- rep(c(\"A\", \"B\"), each = 5)\n\ntapply(x, group, mean)\n\nA B \n3 8 \n\n\nUseful for grouped summaries.",
+    "text": "7.4 Apply Functions\nThe apply family provides cleaner alternatives to explicit loops.\nThere are functions in R that make looping easier:\n\n\napply() – apply a function over margins of an array\n\n\nlapply() – loop over a list and return a list\n\n\nsapply() – simplified version of lapply()\n\n\nmapply() – multivariate version of lapply()\n\n\ntapply() – apply a function over subsets of a vector\n\n\n7.4.1 apply()\nMost often used to apply a function to rows or columns of a matrix.\n\nm &lt;- matrix(1:12, 3, 4)\nprint(m)\n\n     [,1] [,2] [,3] [,4]\n[1,]    1    4    7   10\n[2,]    2    5    8   11\n[3,]    3    6    9   12\n\napply(m, 1, sum)  # row sums\n\n[1] 22 26 30\n\napply(m, 2, sum)  # column sums\n\n[1]  6 15 24 33\n\n\nSyntax:\napply(X, MARGIN, FUN)\n\n\nX = matrix or array\n\n\nMARGIN = 1 (rows) or 2 (columns)\n\n\nFUN = function to apply\n\nSimilar built-in matrix functions:\n\nrowSums(m)\n\n[1] 22 26 30\n\ncolSums(m)\n\n[1]  6 15 24 33\n\nrowMeans(m)\n\n[1] 5.5 6.5 7.5\n\ncolMeans(m)\n\n[1]  2  5  8 11\n\n\nNote: apply() is not necessarily faster than loops, but it simplifies code.\n\n7.4.2 lapply() and sapply()\nl = long (returns list)\ns = short (simplifies output)\n\nlist1 &lt;- list(\n  l1 = seq(1, 10),\n  l2 = 20:29,\n  l3 = rnorm(4)\n)\n\nlapply(list1, mean)\n\n$l1\n[1] 5.5\n\n$l2\n[1] 24.5\n\n$l3\n[1] 0.1269629\n\nsapply(list1, mean)\n\n        l1         l2         l3 \n 5.5000000 24.5000000  0.1269629 \n\n\n\n\nlapply() always returns a list\n\n\nsapply() tries to simplify the result (vector or matrix)\n\n7.4.3 mapply()\nMultivariate version of lapply().\n\nmapply(sum, 1:3, 4:6)\n\n[1] 5 7 9\n\n\nApplies a function to multiple arguments element-wise.\n\n7.4.4 tapply()\nApplies a function over subsets of a vector.\n\nx &lt;- 1:10\ngroup &lt;- rep(c(\"A\", \"B\"), each = 5)\n\ntapply(x, group, mean)\n\nA B \n3 8 \n\n\nUseful for grouped summaries.",
     "crumbs": [
       "Control Structures",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Loops</span>"
