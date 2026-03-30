@@ -1,16 +1,21 @@
 # Welcome {.unnumbered}
 
-This workshop is intended for complete beginners to learn the basics of the R programming language. Topics covered include the basics of installation, working with objects, and using control structures. The workshop concludes with hands-on exercises to help you put your new skills into practice.
+This workshop introduces participants to building reproducible data science workflows in R. Rather than focusing on programming syntax alone, we will walk through the full lifecycle of a data analysis project—from data cleaning and exploration to modeling and evaluation—using a single, consistent workflow.
+
+Participants will gain hands-on experience working with real data, emphasizing the importance of careful data preparation, clear organization, and proper model evaluation. We will also introduce foundational modeling techniques, including linear and logistic regression, and discuss how these workflows scale to larger datasets and high-performance computing environments.
 
 The content for this workshop is developed and taught by the OIT Research Technology Services team at SMU in collaboration with SMU Libraries.
 
 ## Objectives
 
-- Learn the basics of the R programming language.
-- Learn how to use the RStudio IDE.
-- Learn to leverage the different data types and structures available in R.
-- Learn how to write functions to streamline your code.
-- Gain hands-on experience with programming in R.
+- Understand the structure of a reproducible data science workflow in R.
+- Learn how to organize projects and work with data in a consistent, repeatable way.
+- Gain experience cleaning and preparing real-world datasets for analysis.
+- Perform exploratory data analysis using visualization and summary statistics.
+- Build and interpret linear and logistic regression models.
+- Learn how to properly evaluate models using train/test splits.
+- Recognize common pitfalls such as overfitting and extrapolation.
+- Understand how these workflows can scale to larger datasets and computing environments.
 
 ## License
 
