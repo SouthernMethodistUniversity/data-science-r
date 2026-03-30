@@ -224,6 +224,61 @@
     ]
   },
   {
+    "objectID": "eda.html",
+    "href": "eda.html",
+    "title": "\n4  Exploratory Data Analysis\n",
+    "section": "",
+    "text": "4.1 Distribution of Body Mass\nIn this section, we begin exploring the cleaned dataset. Exploratory Data Analysis (EDA) helps us understand the structure of the data, identify patterns, and guide our modeling decisions.\nEDA is an important step because it allows us to: - understand distributions of variables\n- identify relationships between variables\n- detect potential outliers or unusual values\n- build intuition before fitting models\nWe start by examining the distribution of body mass to understand its overall shape.\nggplot(df, aes(x = body_mass_g)) +\n  geom_histogram(bins = 12) +\n  labs(title = \"Distribution of Body Mass\")",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Exploratory Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "eda.html#body-mass-vs-flipper-length",
+    "href": "eda.html#body-mass-vs-flipper-length",
+    "title": "\n4  Exploratory Data Analysis\n",
+    "section": "\n4.2 Body Mass vs Flipper Length",
+    "text": "4.2 Body Mass vs Flipper Length\nNext, we explore the relationship between flipper length and body mass.\n\nggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +\n  geom_point() +\n  labs(title = \"Body Mass vs Flipper Length\")",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Exploratory Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "eda.html#body-mass-vs-bill-length",
+    "href": "eda.html#body-mass-vs-bill-length",
+    "title": "\n4  Exploratory Data Analysis\n",
+    "section": "\n4.3 Body Mass vs Bill Length",
+    "text": "4.3 Body Mass vs Bill Length\nWe also examine how bill length relates to body mass.\n\nggplot(df, aes(x = bill_length_mm, y = body_mass_g)) +\n  geom_point() +\n  labs(title = \"Body Mass vs Bill Length\")",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Exploratory Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "eda.html#body-mass-by-species",
+    "href": "eda.html#body-mass-by-species",
+    "title": "\n4  Exploratory Data Analysis\n",
+    "section": "\n4.4 Body Mass by Species",
+    "text": "4.4 Body Mass by Species\nFinally, we compare body mass across different penguin species.\n\nggplot(df, aes(x = species, y = body_mass_g)) +\n  geom_boxplot() +\n  labs(title = \"Body Mass by Species\")",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Exploratory Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "eda.html#key-takeaways",
+    "href": "eda.html#key-takeaways",
+    "title": "\n4  Exploratory Data Analysis\n",
+    "section": "\n4.5 Key Takeaways",
+    "text": "4.5 Key Takeaways\nFrom these plots, we can begin to see patterns in the data:\n\nbody mass has a clear distribution\n\nsome variables appear to have relationships with body mass\n\ndifferences between species may be important\n\nThese insights will guide how we build and interpret our models in the next section.",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Exploratory Data Analysis</span>"
+    ]
+  },
+  {
     "objectID": "model.html",
     "href": "model.html",
     "title": "Data Modelling",
