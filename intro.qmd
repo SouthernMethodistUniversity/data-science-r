@@ -1,33 +1,43 @@
 # Introduction {.unnumbered}
 
-## What is R? {.unnumbered}
+## What is a Data Science Workflow? {.unnumbered}
 
-- R is a programming language and environment used for statistical computing 
-and data visualization.
+- A data science workflow is a structured, repeatable process for analyzing data.
 
-- It was developed as a free and open-source alternative to the S programming 
-language and is built primarily on C and Fortran, with some extensions in C++.
+- It typically includes stages such as data cleaning, exploration, modeling, and evaluation.
 
-- R is widely used in data science, statistics, and research.
+- Rather than jumping straight into modeling, a good workflow emphasizes understanding and preparing the data first.
 
-- It provides powerful tools for data analysis, visualization, and modeling.
+- A clear workflow helps ensure that analyses are organized, transparent, and reproducible.
 
-- R runs on Windows, Mac, and Linux, making it accessible across different 
-operating systems.
+- Reproducibility means that you (or someone else) can rerun the same analysis and get the same results.
 
-- Users can extend R by installing packages from CRAN (The Comprehensive R 
-Archive Network), which provides thousands of add-ons for specialized analysis.
+- Workflows are especially important when working on collaborative projects or scaling to larger datasets.
 
-- R has an active community and many free resources for learning and 
-troubleshooting.
+- In this workshop, we will focus on a simple, practical workflow:
+  - Clean → Explore → Model → Evaluate → Scale
 
-## Why use R? {.unnumbered}
+## Why focus on workflows? {.unnumbered}
 
-- R is a popular language used in statistics and data science.
+- Many beginners focus on learning individual tools or models, but struggle to connect them into a coherent process.
 
-- R has much more intuitive and extensible visualization libraries compared to 
-other popular programming languages.
+- A well-defined workflow helps you know:
+  - where to start
+  - what to do next
+  - how to avoid common mistakes
 
-- Perfect for publishing reproducible research using Quarto.
+- Most of the time in real-world data science is spent on data cleaning and preparation—not modeling.
 
-- Perfect for creating dashboards using R Shiny.
+- A consistent workflow makes your work easier to debug, share, and extend.
+
+- Proper workflows help prevent common pitfalls such as:
+  - overfitting models
+  - evaluating models on the wrong data
+  - making unreliable predictions (extrapolation)
+
+- The same workflow you learn here can be applied to:
+  - different datasets
+  - different models
+  - larger computing environments (including HPC)
+
+- The goal of this workshop is not just to build models, but to build **good habits** for working with data in R.

@@ -1,17 +1,75 @@
 # Setup
 
-## Objectives
+In this section, we will set up our working environment and organize our project. A well-structured project is the foundation of a reproducible workflow.
 
--   Get your RStudio environment set up
+## Create a Project
 
-## Accessing RStudio
+First, create an RStudio Project by selecting `File` > `New Project...`.
 
-The best way to write R code is in the RStudio editor, which is a free product created by a company called Posit. You can either install R and RStudio on your computer, or access RStudio in web browser using a free Posit Cloud account
+Then, donwload the code file and place in your project directory: [R Code](code/script.R)
 
-### Install on your computer
+## Load Required Packages
 
-To install R and RStudio on your computer, follow the instructions [here](https://posit.co/download/rstudio-desktop/). Be sure to install R first, and then install RStudio. You will never need to open the R installation because RStudio automatically finds your R installation.
+We will use a small number of packages throughout this workshop:
 
-### Posit Cloud (web browser)
+- **tidyverse** for data manipulation and visualization  
+- **palmerpenguins** for our example dataset  
 
-Posit Cloud works in the browser with a free account. You can make an account and get started [here](https://posit.cloud/). This option is recommended for those who regularly use different computers for their work.
+If you do not already have these installed, run:
+
+```r
+install.packages(c("tidyverse", "palmerpenguins"))
+```
+
+Now load the packages:
+
+```{r}
+#| output: false
+
+library(tidyverse)
+library(palmerpenguins)
+```
+
+## Set a Seed for Reproducibility
+
+Setting a seed ensures that any random operations (such as splitting data into training and testing sets) produce the same results each time the code is run.
+
+```{r}
+set.seed(123)
+```
+
+## Project Organization
+
+Before writing any code, it is important to organize your project.
+
+In your RStudio Project, manually create the following folders:
+
+- `data/` → for raw and cleaned datasets  
+- `outputs/` → for results, plots, and exported files  
+
+This structure helps keep your work organized and makes it easier to rerun or share your analysis.
+
+## Create and Save the Dataset {.unnumbered}
+
+We will use the **penguins** dataset for this workshop.
+
+To simulate working with an external dataset, we will write it to a CSV file inside the `data/` folder. This allows us to practice reading data from a file, which is how most real-world workflows begin.
+
+```{r}
+example_path <- "data/penguins.csv"
+
+if (!file.exists(example_path)) {
+  write_csv(penguins, example_path)
+}
+```
+
+## Key Takeaway
+
+A reproducible workflow starts with:
+
+- clearly organized folders  
+- consistent file paths  
+- explicit package usage  
+- and code that can be rerun from start to finish  
+
+These small habits make a big difference as your projects grow in complexity.
