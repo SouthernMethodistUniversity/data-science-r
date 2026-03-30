@@ -136,6 +136,50 @@
     ]
   },
   {
+    "objectID": "data_load.html",
+    "href": "data_load.html",
+    "title": "\n2  Data Loading\n",
+    "section": "",
+    "text": "2.1 Load the Data\nIn this section, we load our dataset and take an initial look at its structure. This first inspection step is important for understanding what we are working with before doing any cleaning or modeling.",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Loading</span>"
+    ]
+  },
+  {
+    "objectID": "data_load.html#load-the-data",
+    "href": "data_load.html#load-the-data",
+    "title": "\n2  Data Loading\n",
+    "section": "",
+    "text": "df_raw &lt;- read_csv(\"data/penguins.csv\", show_col_types = FALSE)",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Loading</span>"
+    ]
+  },
+  {
+    "objectID": "data_load.html#inspect-the-data",
+    "href": "data_load.html#inspect-the-data",
+    "title": "\n2  Data Loading\n",
+    "section": "\n2.2 Inspect the Data",
+    "text": "2.2 Inspect the Data\n\nstr(df_raw)\n\n'data.frame':   344 obs. of  8 variables:\n $ species    : Factor w/ 3 levels \"Adelie\",\"Chinstrap\",..: 1 1 1 1 1 1 1 1 1 1 ...\n $ island     : Factor w/ 3 levels \"Biscoe\",\"Dream\",..: 3 3 3 3 3 3 3 3 3 3 ...\n $ bill_len   : num  39.1 39.5 40.3 NA 36.7 39.3 38.9 39.2 34.1 42 ...\n $ bill_dep   : num  18.7 17.4 18 NA 19.3 20.6 17.8 19.6 18.1 20.2 ...\n $ flipper_len: int  181 186 195 NA 193 190 181 195 193 190 ...\n $ body_mass  : int  3750 3800 3250 NA 3450 3650 3625 4675 3475 4250 ...\n $ sex        : Factor w/ 2 levels \"female\",\"male\": 2 1 1 NA 1 2 1 2 NA NA ...\n $ year       : int  2007 2007 2007 2007 2007 2007 2007 2007 2007 2007 ...\n\nhead(df_raw)\n\n  species    island bill_len bill_dep flipper_len body_mass    sex year\n1  Adelie Torgersen     39.1     18.7         181      3750   male 2007\n2  Adelie Torgersen     39.5     17.4         186      3800 female 2007\n3  Adelie Torgersen     40.3     18.0         195      3250 female 2007\n4  Adelie Torgersen       NA       NA          NA        NA   &lt;NA&gt; 2007\n5  Adelie Torgersen     36.7     19.3         193      3450 female 2007\n6  Adelie Torgersen     39.3     20.6         190      3650   male 2007\n\nsummary(df_raw)\n\n      species          island       bill_len        bill_dep    \n Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  \n Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  \n Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  \n                                 Mean   :43.92   Mean   :17.15  \n                                 3rd Qu.:48.50   3rd Qu.:18.70  \n                                 Max.   :59.60   Max.   :21.50  \n                                 NA's   :2       NA's   :2      \n  flipper_len      body_mass        sex           year     \n Min.   :172.0   Min.   :2700   female:165   Min.   :2007  \n 1st Qu.:190.0   1st Qu.:3550   male  :168   1st Qu.:2007  \n Median :197.0   Median :4050   NA's  : 11   Median :2008  \n Mean   :200.9   Mean   :4202                Mean   :2008  \n 3rd Qu.:213.0   3rd Qu.:4750                3rd Qu.:2009  \n Max.   :231.0   Max.   :6300                Max.   :2009  \n NA's   :2       NA's   :2",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Loading</span>"
+    ]
+  },
+  {
+    "objectID": "data_load.html#initial-observations",
+    "href": "data_load.html#initial-observations",
+    "title": "\n2  Data Loading\n",
+    "section": "\n2.3 Initial Observations",
+    "text": "2.3 Initial Observations\nFrom this first look, we can already identify some issues that will need to be addressed:\n\nsome body measurements have missing values\n\ncategorical variables may need to be recoded as factors\n\nwe can create a binary outcome for classification\n\nThese observations will guide the data cleaning step in the next section.",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Loading</span>"
+    ]
+  },
+  {
     "objectID": "model.html",
     "href": "model.html",
     "title": "Data Modelling",
