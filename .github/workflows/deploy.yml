@@ -18,14 +18,14 @@ jobs:
       # Install missing R packages
       - name: Install R Packages
         run: |
-          Rscript -e "needed <- c('rmarkdown', 'tidyverse', 'quarto', 'downlit', 'xml2');
+          Rscript -e "needed <- c('rmarkdown', 'tidyverse', 'quarto', 'downlit', 'xml2', 'palmerpenguins');
                       installed <- rownames(installed.packages());
                       to_install <- setdiff(needed, installed);
                       if (length(to_install) > 0) install.packages(to_install)"
 
       - name: Render Quarto Project
         run: quarto render
-        
+
       - name: Copy Code Files to Deployment Directory
         run: cp -r code _book/code
 
