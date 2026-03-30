@@ -55,7 +55,7 @@ We will use the **penguins** dataset for this workshop.
 
 To simulate working with an external dataset, we will write it to a CSV file inside the `data/` folder. This allows us to practice reading data from a file, which is how most real-world workflows begin.
 
-```{r}
+```r
 example_path <- "data/penguins.csv"
 
 if (!file.exists(example_path)) {
