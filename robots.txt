@@ -1,0 +1,1 @@
+Sitemap: https://southernmethodistuniversity.github.io/intro-to-r/sitemap.xml
