@@ -564,11 +564,109 @@
     ]
   },
   {
+    "objectID": "logistic_reg.html",
+    "href": "logistic_reg.html",
+    "title": "\n9  Logistic Regression\n",
+    "section": "",
+    "text": "9.1 Create Train and Test Sets\nLogistic regression is a modeling technique used when the outcome variable is binary, meaning it has two possible values (such as 0/1, yes/no, or success/failure). Instead of predicting a continuous value, logistic regression estimates the probability that an observation belongs to a particular class.\nAs before, we split the data so that we can evaluate the model on unseen data.\nset.seed(123)\n\ntrain_index_cls &lt;- sample(seq_len(nrow(df)), size = floor(0.8 * nrow(df)))\ntrain_cls &lt;- df[train_index_cls, ]\ntest_cls  &lt;- df[-train_index_cls, ]\nIn this example, the outcome variable is:",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_reg.html#create-train-and-test-sets",
+    "href": "logistic_reg.html#create-train-and-test-sets",
+    "title": "\n9  Logistic Regression\n",
+    "section": "",
+    "text": "large_body = 1 → above-median body mass\n\n\nlarge_body = 0 → below-median body mass",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_reg.html#fit-the-logistic-regression-model",
+    "href": "logistic_reg.html#fit-the-logistic-regression-model",
+    "title": "\n9  Logistic Regression\n",
+    "section": "\n9.2 Fit the Logistic Regression Model",
+    "text": "9.2 Fit the Logistic Regression Model\n\nglm_model &lt;- glm(\n  large_body ~ bill_length_mm + bill_depth_mm + flipper_length_mm,\n  data = train_cls,\n  family = \"binomial\"\n)\n\n\n\nglm() is used for generalized linear models\n\n\nfamily = \"binomial\" specifies logistic regression",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_reg.html#inspect-the-model",
+    "href": "logistic_reg.html#inspect-the-model",
+    "title": "\n9  Logistic Regression\n",
+    "section": "\n9.3 Inspect the Model",
+    "text": "9.3 Inspect the Model\n\nsummary(glm_model)\n\n\nCall:\nglm(formula = large_body ~ bill_length_mm + bill_depth_mm + flipper_length_mm, \n    family = \"binomial\", data = train_cls)\n\nCoefficients:\n                   Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)       -42.64099    7.12539  -5.984 2.17e-09 ***\nbill_length_mm     -0.06164    0.04502  -1.369    0.171    \nbill_depth_mm      -0.01402    0.12162  -0.115    0.908    \nflipper_length_mm   0.22738    0.03350   6.787 1.15e-11 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 367.79  on 265  degrees of freedom\nResidual deviance: 163.89  on 262  degrees of freedom\nAIC: 171.89\n\nNumber of Fisher Scoring iterations: 6\n\n\n\nCoefficients represent how each predictor affects the log-odds of the outcome\n\nPositive values increase the probability of class 1\n\nNegative values decrease the probability of class 1",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_reg.html#predict-probabilities",
+    "href": "logistic_reg.html#predict-probabilities",
+    "title": "\n9  Logistic Regression\n",
+    "section": "\n9.4 Predict Probabilities",
+    "text": "9.4 Predict Probabilities\n\nprob_preds &lt;- predict(glm_model, newdata = test_cls, type = \"response\")\n\n\nPredictions are probabilities between 0 and 1\n\nThese represent the likelihood of belonging to class 1",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_reg.html#convert-probabilities-to-classes",
+    "href": "logistic_reg.html#convert-probabilities-to-classes",
+    "title": "\n9  Logistic Regression\n",
+    "section": "\n9.5 Convert Probabilities to Classes",
+    "text": "9.5 Convert Probabilities to Classes\n\nclass_preds &lt;- ifelse(prob_preds &gt;= 0.5, 1, 0)\n\n\nA threshold (here, 0.5) is used to assign class labels\n\nThis converts probabilities into predictions",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_reg.html#evaluate-the-model",
+    "href": "logistic_reg.html#evaluate-the-model",
+    "title": "\n9  Logistic Regression\n",
+    "section": "\n9.6 Evaluate the Model",
+    "text": "9.6 Evaluate the Model\n\nmean(class_preds == test_cls$large_body)\n\n[1] 0.8358209\n\n\n\nThis computes accuracy, the proportion of correct predictions\n\n\ntable(actual = test_cls$large_body, predicted = class_preds)\n\n      predicted\nactual  0  1\n     0 29  2\n     1  9 27\n\n\n\nThis is a confusion matrix\n\nIt shows how many predictions were correct vs incorrect",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_reg.html#key-takeaways",
+    "href": "logistic_reg.html#key-takeaways",
+    "title": "\n9  Logistic Regression\n",
+    "section": "\n9.7 Key Takeaways",
+    "text": "9.7 Key Takeaways\n\nLogistic regression is used for binary outcomes\n\nThe model predicts probabilities, not just classes\n\nA threshold is used to convert probabilities into predictions\n\nEvaluation should be done on a test dataset\n\n\n\nLike linear regression, the goal is not just to fit the data,\nbut to make reliable predictions on new observations.",
+    "crumbs": [
+      "Data Modelling",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
     "objectID": "next_steps.html",
     "href": "next_steps.html",
     "title": "Next Steps",
     "section": "",
-    "text": "Workshops\nNow that you have learned the fundamentals of building a data science workflow in R, here are some resources to help you continue developing your skills.\nPlease visit LibCal to register for additional R workshops. Topics include:",
+    "text": "Reproducibility and Scaling\nNow that you have learned the fundamentals of building a data science workflow in R, here are some resources to help you continue developing your skills.\nOne of the key ideas from this workshop is that your workflow should be reproducible and scalable.\nA good workflow allows you to: - rerun your entire analysis from start to finish\n- save outputs in a consistent and organized way\n- apply the same process to larger datasets or more powerful computing environments\nFor example, you can save model outputs:\nYou can also run your entire workflow as a script:\nThis becomes especially useful when: - working with larger datasets\n- automating analyses\n- running jobs on high-performance computing (HPC) systems",
+    "crumbs": [
+      "Next Steps"
+    ]
+  },
+  {
+    "objectID": "next_steps.html#reproducibility-and-scaling",
+    "href": "next_steps.html#reproducibility-and-scaling",
+    "title": "Next Steps",
+    "section": "",
+    "text": "write_csv(eval_df, \"outputs/lm_test_predictions.csv\")\n\nRscript workshop_workflow.R\n\n\nThe same workflow you used in this workshop can scale from your laptop to much larger systems.",
     "crumbs": [
       "Next Steps"
     ]
@@ -577,8 +675,8 @@
     "objectID": "next_steps.html#workshops",
     "href": "next_steps.html#workshops",
     "title": "Next Steps",
-    "section": "",
-    "text": "Effective Data Visualization in R",
+    "section": "Workshops",
+    "text": "Workshops\nPlease visit LibCal to register for additional R workshops. Topics include:\n\nEffective Data Visualization in R",
     "crumbs": [
       "Next Steps"
     ]
