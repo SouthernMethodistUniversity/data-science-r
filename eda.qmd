@@ -1,1 +1,87 @@
 # Exploratory Data Analysis
+
+```{r}
+#| output: false
+#| echo: false
+
+library(tidyverse)
+library(palmerpenguins)
+df_raw <- penguins
+str(df_raw)
+head(df_raw)
+summary(df_raw)
+df <- df_raw %>%
+  select(species, island, bill_length_mm, bill_depth_mm, flipper_length_mm,
+         body_mass_g, sex) %>%
+  mutate(
+    species = as.factor(species),
+    island = as.factor(island),
+    sex = as.factor(sex),
+    large_body = ifelse(body_mass_g > median(body_mass_g, na.rm = TRUE), 1, 0)
+  ) %>%
+  filter(
+    !is.na(bill_length_mm),
+    !is.na(bill_depth_mm),
+    !is.na(flipper_length_mm),
+    !is.na(body_mass_g),
+    !is.na(sex)
+  )
+```
+
+In this section, we begin exploring the cleaned dataset. Exploratory Data Analysis (EDA) helps us understand the structure of the data, identify patterns, and guide our modeling decisions.
+
+EDA is an important step because it allows us to:
+- understand distributions of variables  
+- identify relationships between variables  
+- detect potential outliers or unusual values  
+- build intuition before fitting models  
+
+## Distribution of Body Mass
+
+We start by examining the distribution of body mass to understand its overall shape.
+
+```{r}
+ggplot(df, aes(x = body_mass_g)) +
+  geom_histogram(bins = 12) +
+  labs(title = "Distribution of Body Mass")
+```
+
+## Body Mass vs Flipper Length
+
+Next, we explore the relationship between flipper length and body mass.
+
+```{r}
+ggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point() +
+  labs(title = "Body Mass vs Flipper Length")
+```
+
+## Body Mass vs Bill Length
+
+We also examine how bill length relates to body mass.
+
+```{r}
+ggplot(df, aes(x = bill_length_mm, y = body_mass_g)) +
+  geom_point() +
+  labs(title = "Body Mass vs Bill Length")
+```
+
+## Body Mass by Species
+
+Finally, we compare body mass across different penguin species.
+
+```{r}
+ggplot(df, aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  labs(title = "Body Mass by Species")
+```
+
+## Key Takeaways
+
+From these plots, we can begin to see patterns in the data:
+
+- body mass has a clear distribution  
+- some variables appear to have relationships with body mass  
+- differences between species may be important  
+
+These insights will guide how we build and interpret our models in the next section.
