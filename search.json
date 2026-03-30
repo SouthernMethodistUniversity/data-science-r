@@ -64,7 +64,7 @@
     "href": "setup.html",
     "title": "\n1  Setup\n",
     "section": "",
-    "text": "1.1 Create a Project\nIn this section, we will set up our working environment and organize our project. A well-structured project is the foundation of a reproducible workflow.\nFirst, create an RStudio Project by selecting File &gt; New Project....\nThen, donwload the code file and place in your project directory: R Code",
+    "text": "1.1 Create a Project\nIn this section, we will set up our working environment and organize our project. A well-structured project is the foundation of a reproducible workflow.\nFirst, create an RStudio Project by selecting File &gt; New Project....\nThen, download the code file and place in your project directory: R Code",
     "crumbs": [
       "Introduction",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setup</span>"
@@ -177,6 +177,50 @@
     "crumbs": [
       "Data Preparation",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Loading</span>"
+    ]
+  },
+  {
+    "objectID": "data_clean.html",
+    "href": "data_clean.html",
+    "title": "\n3  Data Cleaning\n",
+    "section": "",
+    "text": "3.1 Clean and Transform the Data\nIn this section, we clean and prepare the dataset for analysis. Data cleaning is a critical step in any workflow, as real-world data is often incomplete or inconsistent.\nWe will:\ndf &lt;- df_raw %&gt;%\n  select(species, island, bill_length_mm, bill_depth_mm, flipper_length_mm,\n         body_mass_g, sex) %&gt;%\n  mutate(\n    species = as.factor(species),\n    island = as.factor(island),\n    sex = as.factor(sex),\n    large_body = ifelse(body_mass_g &gt; median(body_mass_g, na.rm = TRUE), 1, 0)\n  ) %&gt;%\n  filter(\n    !is.na(bill_length_mm),\n    !is.na(bill_depth_mm),\n    !is.na(flipper_length_mm),\n    !is.na(body_mass_g),\n    !is.na(sex)\n  )",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "data_clean.html#clean-and-transform-the-data",
+    "href": "data_clean.html#clean-and-transform-the-data",
+    "title": "\n3  Data Cleaning\n",
+    "section": "",
+    "text": "select relevant variables\n\nconvert categorical variables to factors\n\ncreate a new feature\n\nremove missing values",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "data_clean.html#inspect-the-cleaned-data",
+    "href": "data_clean.html#inspect-the-cleaned-data",
+    "title": "\n3  Data Cleaning\n",
+    "section": "\n3.2 Inspect the Cleaned Data",
+    "text": "3.2 Inspect the Cleaned Data\n\nstr(df)\n\ntibble [333 × 8] (S3: tbl_df/tbl/data.frame)\n $ species          : Factor w/ 3 levels \"Adelie\",\"Chinstrap\",..: 1 1 1 1 1 1 1 1 1 1 ...\n $ island           : Factor w/ 3 levels \"Biscoe\",\"Dream\",..: 3 3 3 3 3 3 3 3 3 3 ...\n $ bill_length_mm   : num [1:333] 39.1 39.5 40.3 36.7 39.3 38.9 39.2 41.1 38.6 34.6 ...\n $ bill_depth_mm    : num [1:333] 18.7 17.4 18 19.3 20.6 17.8 19.6 17.6 21.2 21.1 ...\n $ flipper_length_mm: int [1:333] 181 186 195 193 190 181 195 182 191 198 ...\n $ body_mass_g      : int [1:333] 3750 3800 3250 3450 3650 3625 4675 3200 3800 4400 ...\n $ sex              : Factor w/ 2 levels \"female\",\"male\": 2 1 1 1 2 1 2 1 2 2 ...\n $ large_body       : num [1:333] 0 0 0 0 0 0 1 0 0 1 ...\n\nsummary(df)\n\n      species          island    bill_length_mm  bill_depth_mm  \n Adelie   :146   Biscoe   :163   Min.   :32.10   Min.   :13.10  \n Chinstrap: 68   Dream    :123   1st Qu.:39.50   1st Qu.:15.60  \n Gentoo   :119   Torgersen: 47   Median :44.50   Median :17.30  \n                                 Mean   :43.99   Mean   :17.16  \n                                 3rd Qu.:48.60   3rd Qu.:18.70  \n                                 Max.   :59.60   Max.   :21.50  \n flipper_length_mm  body_mass_g       sex        large_body    \n Min.   :172       Min.   :2700   female:165   Min.   :0.0000  \n 1st Qu.:190       1st Qu.:3550   male  :168   1st Qu.:0.0000  \n Median :197       Median :4050                Median :0.0000  \n Mean   :201       Mean   :4207                Mean   :0.4835  \n 3rd Qu.:213       3rd Qu.:4775                3rd Qu.:1.0000  \n Max.   :231       Max.   :6300                Max.   :1.0000",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "data_clean.html#compare-before-and-after",
+    "href": "data_clean.html#compare-before-and-after",
+    "title": "\n3  Data Cleaning\n",
+    "section": "\n3.3 Compare Before and After",
+    "text": "3.3 Compare Before and After\n\nnrow(df_raw)\n\n[1] 344\n\nnrow(df)\n\n[1] 333\n\n\nThis comparison shows how many observations were removed during cleaning, reinforcing that data preparation can significantly impact your dataset.",
+    "crumbs": [
+      "Data Preparation",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Data Cleaning</span>"
     ]
   },
   {
