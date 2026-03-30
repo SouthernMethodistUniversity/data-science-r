@@ -1,5 +1,0 @@
-# Objects {.unnumbered}
-
-Almost everything you work with in R is an object. In the previous section you created a variable that holds a number, which is considered a `numeric` object. But, objects can be vectors, datasets, strings of words, or even functions!
-
-In the next 2 sections you will learn about the different data types and structures of objects you can use in R. If you are ever in doubt about what an object is, there are plenty of ways to find out, which we will also cover in the following sections.

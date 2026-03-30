@@ -1,0 +1,3 @@
+# Data Preparation {.unnumbered}
+
+Data preparation is a critical step in any data science workflow because the quality of your analysis depends on the quality of your data. Real-world datasets are often messy, with missing values, inconsistencies, and variables that need to be transformed before they can be used effectively. Taking the time to clean and understand your data upfront leads to more reliable models and better insights later on.
