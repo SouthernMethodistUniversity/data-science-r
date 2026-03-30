@@ -1,9 +1,0 @@
-_book
-.DS_Store
-.RHistory
-*.RProj
-.RProj.user
-.RData
-.Rproj.user
-/.quarto/
-**/*.quarto_ipynb
