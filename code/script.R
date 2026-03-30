@@ -2,7 +2,7 @@
 # 0. SETUP AND PROJECT STRUCTURE
 # ============================================================
 
-# install.packages(c("tidyverse", "palmerpenguins"))
+install.packages(c("tidyverse", "palmerpenguins"))
 
 library(tidyverse)
 library(palmerpenguins)
@@ -25,10 +25,10 @@ if (!file.exists(example_path)) {
 # 1. DATA LOADING
 # ============================================================
 
-df_raw <- read_csv("data/penguins.csv", show_col_types = FALSE)
+df_raw <- read_csv(example_path, show_col_types = FALSE)
 
 str(df_raw)
-head(df_raw)
+head(df_raw, n=10)
 summary(df_raw)
 
 # Notice that this dataset needs cleaning:
@@ -75,11 +75,12 @@ ggplot(df, aes(x = body_mass_g)) +
   geom_histogram(bins = 12) +
   labs(title = "Distribution of Body Mass")
 
+# GGally
 ggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +
   geom_point() +
   labs(title = "Body Mass vs Flipper Length")
 
-ggplot(df, aes(x = bill_length_mm, y = body_mass_g)) +
+ggplot(df, aes(x = log(bill_length_mm), y = body_mass_g)) +
   geom_point() +
   labs(title = "Body Mass vs Bill Length")
 
@@ -93,7 +94,11 @@ ggplot(df, aes(x = species, y = body_mass_g)) +
 
 # Predict body mass using body measurements.
 
+lm_model <- lm(body_mass_g ~ flipper_length_mm, data = df)
 lm_model <- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = df)
+
+cor(df$flipper_length_mm, df$body_mass_g)
+cor(df$bill_length_mm, df$body_mass_g)
 
 summary(lm_model)
 coef(lm_model)
@@ -102,6 +107,23 @@ ggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +
   geom_point() +
   geom_smooth(method = "lm") +
   labs(title = "Linear Regression: Body Mass vs Flipper Length")
+
+df$predicted = -6445.476 + (3.2293*df$bill_length_mm) + (17.836*df$bill_depth_mm) + (50.762 * df$flipper_length_mm)
+
+ggplot(df, aes(x = flipper_length_mm, y = predicted)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Linear Regression: Predicted vs Flipper Length")
+
+ggplot(df, aes(x = bill_length_mm, y = predicted)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Linear Regression: Predicted vs Bill Length")
+
+ggplot(df, aes(x = bill_depth_mm, y = predicted)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Linear Regression: Predicted vs Bill Depth")
 
 # ============================================================
 # 5. EXTRAPOLATION
@@ -139,7 +161,7 @@ train_index <- sample(seq_len(nrow(df)), size = floor(0.8 * nrow(df)))
 train <- df[train_index, ]
 test  <- df[-train_index, ]
 
-lm_train <- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = train)
+lm_train <- lm(body_mass_g ~ flipper_length_mm, data = train)
 
 # WRONG: evaluate on training data
 train_preds_wrong <- predict(lm_train, newdata = train)
