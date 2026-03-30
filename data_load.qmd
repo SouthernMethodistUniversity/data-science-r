@@ -1,1 +1,34 @@
 # Data Loading
+
+In this section, we load our dataset and take an initial look at its structure. This first inspection step is important for understanding what we are working with before doing any cleaning or modeling.
+
+## Load the Data
+
+```{r}
+#| output: false
+#| echo: false
+
+df_raw <- penguins
+```
+
+```r
+df_raw <- read_csv("data/penguins.csv", show_col_types = FALSE)
+```
+
+## Inspect the Data
+
+```{r}
+str(df_raw)
+head(df_raw)
+summary(df_raw)
+```
+
+## Initial Observations
+
+From this first look, we can already identify some issues that will need to be addressed:
+
+- some body measurements have missing values  
+- categorical variables may need to be recoded as factors  
+- we can create a binary outcome for classification  
+
+These observations will guide the data cleaning step in the next section.
